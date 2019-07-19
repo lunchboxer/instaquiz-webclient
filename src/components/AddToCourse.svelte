@@ -48,8 +48,7 @@
 <div class="container-centered">
   <div class="join-course">
 
-    <h1 class="title">Welcome</h1>
-    <h2 class="subtitle">Join your first course now!</h2>
+    <h1 class="title">Join a course</h1>
 
     <p>
       Simply enter the code word given by your instructor and you'll be added to

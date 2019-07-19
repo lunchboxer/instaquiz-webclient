@@ -32,7 +32,7 @@
       await auth.signup(username, name, password)
       errors = ''
       notifications.add({ text: `Created account for '${username}'`, type: 'success' })
-      window.location.assign('/first-time')
+      window.location.assign('/join-course')
     } catch (error) {
       errors = error
       notifications.add({ text: 'registration failed.', type: 'danger' })

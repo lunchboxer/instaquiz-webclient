@@ -28,7 +28,7 @@
   const router = Navaid("/", () => import("./NotFound.svelte").then(draw))
     .on("/", () => import("./dashboard/Dashboard.svelte").then(draw))
     .on("/signup", () => import("./Signup.svelte").then(draw))
-    .on("/first-time", () => import("./FirstTime.svelte").then(draw))
+    .on("/join-course", () => import("./AddToCourse.svelte").then(draw))
     .on("/login", () => import("./Login.svelte").then(draw))
     .listen();
   onDestroy(router.unlisten);
