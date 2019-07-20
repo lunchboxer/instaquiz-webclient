@@ -8,6 +8,7 @@ export const LOGIN = gql`
         id
         username
         name
+        role
       }
     }
   }
@@ -21,6 +22,7 @@ export const SIGNUP = gql`
         id
         username
         name
+        role
       }
     }
   }

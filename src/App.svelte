@@ -8,8 +8,6 @@
   let active = '/'
   let uri = location.pathname
 
-  $: console.log(`acitve is ${active}`)
-  $: console.log(`uri is ${uri}`)
 </script>
 
 <style>

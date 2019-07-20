@@ -6,6 +6,7 @@ const postcss = require('rollup-plugin-postcss')
 const sass = require('rollup-plugin-sass')
 const livereload = require('rollup-plugin-livereload')
 const notify = require('rollup-plugin-notify')
+const includePaths = require('rollup-plugin-includepaths')
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -19,6 +20,7 @@ module.exports = [
       dir: 'public/bundle'
     },
     plugins: [
+      includePaths({ paths: ['./src/'] }),
       svelte({
         // enable run-time checks when not in production
         dev: !production,
