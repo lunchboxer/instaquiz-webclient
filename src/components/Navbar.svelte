@@ -3,7 +3,6 @@
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
   let showMenu = false
-  export let active
   const logout = async () => {
     const username = await auth.logout()
     notifications.add({ text: `Logged out user '${username}'`, type: 'success' })
@@ -59,7 +58,7 @@
         aria-label="menu"
         aria-expanded="false"
         data-target="navmenu"
-        on:click={() => showMenu = !showMenu}
+        on:click={() => { showMenu = !showMenu }}
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -72,19 +71,19 @@
     <div
       id="navmenu"
       class="navbar-menu"
-      on:click={() => showMenu = !showMenu}
+      on:click={() => { showMenu = !showMenu }}
       class:is-active={showMenu}
     >
       <div class="navbar-start">
         {#if $auth.username}
-        <!-- <NavbarLink url="/" text="Dashboard" icon="chalkboard-teacher" {active}/> -->
+        <!-- <NavbarLink url="/" text="Dashboard" icon="chalkboard-teacher" /> -->
         {/if}
       </div>
   
       <div class="navbar-end">
         {#if $auth.name}
         
-          <NavbarLink url="me" icon="user-circle" text={$auth.name}/>
+          <NavbarLink url="/me" icon="user-circle" text={$auth.name}/>
          
           <div class="buttons">
             <button class="button is-text" on:click={logout}>

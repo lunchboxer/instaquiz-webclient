@@ -1,8 +1,10 @@
 <script>
+  import active from 'svelte-spa-router/active'
+  import { link } from 'svelte-spa-router'
+
   export let url = ''
   export let text = ''
   export let icon = null
-  export let active = ''
 </script>
 <style>
   i {
@@ -12,7 +14,7 @@
   }
 
   @media only screen and (max-width: 1024px) {
-    a.is-active {
+    :global(a.active) {
       border-radius: 4px;
       color: #cb2d6f;
       font-weight: bold;
@@ -21,9 +23,8 @@
   }
 </style>
 
-<a class="navbar-item" class:is-active={active===url} href={url}>
+<a class="navbar-item" href="{url}" use:link use:active>
   {#if icon}
-    <i class="fas fa-{icon}"></i>
-  {/if}
-  {text} 
+  <i class="fas fa-{icon}"></i>
+  {/if} {text}
 </a>

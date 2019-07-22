@@ -1,13 +1,10 @@
 <script>
   import { NotificationList } from './components/notifications'
   import { auth } from './data/auth'
-  import Router from './components/Router.svelte'
+  import Router, { location } from 'svelte-spa-router'
+  import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-
-  let active = '/'
-  let uri = location.pathname
-
 </script>
 
 <style>
@@ -18,16 +15,16 @@
   }
 </style>
 
-<Navbar {active} />
+<Navbar />
 
 <main>
 
-  {#if $auth.username || uri === "/signup"}
-    <Router bind:active bind:uri/>
+  {#if $auth.username || $location === '/signup'}
+    <Router {routes} />
   {:else}
     <Login/>
   {/if}
         
-  </main>
+</main>
   
-  <NotificationList/>
+<NotificationList/>

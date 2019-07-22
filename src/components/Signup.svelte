@@ -1,4 +1,5 @@
 <script>
+  import { push } from 'svelte-spa-router'
   import { auth } from '../data/auth'
   import { notifications } from './notifications'
   import Input from './Input.svelte'
@@ -32,7 +33,7 @@
       await auth.signup(username, name, password)
       errors = ''
       notifications.add({ text: `Created account for '${username}'`, type: 'success' })
-      window.location.assign('/join-course')
+      push('/join-course')
     } catch (error) {
       errors = error
       notifications.add({ text: 'registration failed.', type: 'danger' })
@@ -77,7 +78,7 @@
             Register
           </button>
           <p>or</p>
-          <a href="/login" class="button">Log in with existing account</a>
+          <a href="#/login" class="button">Log in with existing account</a>
         </div>
       </div>
     </form>

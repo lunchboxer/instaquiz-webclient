@@ -96,7 +96,7 @@
             Let me in!
           </button>
           <p>or</p>
-          <a href="signup" class="button">Create account</a>
+          <a href="#/signup" class="button">Create account</a>
         </div>
       </div>
     </form>
