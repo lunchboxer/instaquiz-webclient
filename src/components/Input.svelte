@@ -1,6 +1,5 @@
 <script>
   let input
-  export let name = ''
   export let value
   export let showDescription = false
   export let label = ''
@@ -30,8 +29,7 @@
 </script>
 
 <div class="field">
-  <label class="label"
-    >{label} {#if description}
+  <label class="label">{label} {#if description}
     <p class="help is-info" id="{descriptionId}">{description}</p>
     {/if}
   </label>
@@ -41,7 +39,7 @@
       class:has-icons-left="{leftIcon}"
       class:has-icons-right="{rightIcon}"
     >
-      {#if type==="text"}
+      {#if type === 'text'}
       <input
         bind:this="{input}"
         {name}
@@ -58,7 +56,7 @@
         on:invalid|preventDefault="{checkValidity}"
         {placeholder}
       />
-      {/if} {#if type==="password"}
+      {/if} {#if type === 'password'}
       <input
         bind:this="{input}"
         {name}
@@ -75,7 +73,7 @@
         on:invalid|preventDefault="{checkValidity}"
         {placeholder}
       />
-      {/if} {#if type==="date"}
+      {/if} {#if type === 'date'}
       <input
         bind:this="{input}"
         {name}
@@ -90,7 +88,7 @@
         on:input="{checkValidity}"
         on:invalid|preventDefault="{checkValidity}"
       />
-      {/if} {#if type==="datetime-local"}
+      {/if} {#if type === 'datetime-local'}
       <input
         bind:this="{input}"
         {name}

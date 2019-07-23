@@ -1,19 +1,19 @@
 <script>
-  import { notifications } from "./notifications";
-  import { auth } from "../data/auth"
-  import { ADD_TO_COURSE } from "../data/mutations"
+  import { notifications } from './notifications'
+  import { auth } from '../data/auth'
+  import { ADD_TO_COURSE } from '../data/mutations'
   import { request } from '../data/fetch-client'
-  import Input from "./Input.svelte";
-  import Error from "./Error.svelte";
+  import Input from './Input.svelte'
+  import Error from './Error.svelte'
 
-  let code = "";
-  let form;
-  let submit;
-  let loading = false;
+  let code = ''
+  let form
+  let submit
+  let loading = false
   let errors = ''
 
   const join = async () => {
-    let isValid = form.checkValidity()
+    const isValid = form.checkValidity()
     if (!isValid) {
       notifications.add({
         text: 'Please fix form errors first.',
@@ -24,7 +24,7 @@
     loading = true
     submit.disabled = true
     try {
-      const response = await request(ADD_TO_COURSE, {id: $auth.id, code})
+      const response = await request(ADD_TO_COURSE, { id: $auth.id, code })
       errors = ''
       notifications.add({ text: `Student ${$auth.name} added to ${response.addStudentToCourse.name}`, type: 'success' })
     } catch (error) {
@@ -34,7 +34,7 @@
       loading = false
       submit.disabled = false
     }
-  };
+  }
 </script>
 
 <style>
@@ -59,14 +59,9 @@
 
     <Error {errors} />
     <form bind:this="{form}" novalidate on:submit|preventDefault="{join}">
-      <Input name="codeField" label="Code word" bind:value="{code}" required />
+      <Input label="Code word" bind:value="{code}" required />
 
-      <button
-        type="submit"
-        class="button is-primary"
-        class:is-loading="{loading}"
-        bind:this="{submit}"
-      >
+      <button type="submit" class="button is-primary" class:is-loading="{loading}" bind:this="{submit}">
         Join!
       </button>
     </form>

@@ -62,19 +62,15 @@
 
     <Error {errors} />
     <form bind:this={form} novalidate on:submit|preventDefault={signup}>
-      <Input name="idField" type="text" bind:value={username} label="Student ID" required leftIcon="id-card" />
+      <Input type="text" bind:value={username} label="Student ID" required leftIcon="id-card" />
 
-      <Input name="nameField" type="text" bind:value={name} label="Name" required leftIcon="user" />
+      <Input type="text" bind:value={name} label="Name" required leftIcon="user" />
 
-      <Input name="passField" type="password" bind:value={password} label="Password" required leftIcon="key" />
+      <Input type="password" bind:value={password} label="Password" required leftIcon="key" />
       <Input type="password" label="Confirm password" bind:value={confirmpass} leftIcon="check" />
       <div class="field">
         <div class="control">
-          <button type="submit"
-            class="button is-primary"
-            class:is-loading={loading}
-            bind:this={submit}
-          >
+          <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={submit}>
             Register
           </button>
           <p>or</p>
@@ -82,5 +78,5 @@
         </div>
       </div>
     </form>
-    </div>
   </div>
+</div>

@@ -65,7 +65,7 @@
 
     <Error {errors} />
     <form bind:this={form} novalidate on:submit|preventDefault={login}>
-      <Input name="usernameField" type="text" bind:value={username} label="Student ID" required leftIcon="user" />
+      <Input type="text" bind:value={username} label="Student ID" required leftIcon="user" />
 
       <label class="label" for="passwordField">Password</label>
 
