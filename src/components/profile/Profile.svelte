@@ -13,9 +13,15 @@
 
 {#if $me}
 <DL>
-  <dt>Username:</dt>
+  <dt>Role:</dt>
+  <dd>{$me.role}</dd>
+
+  <dt>{$me.role === 'Student' ? 'Student ID:' : 'Username:'}</dt>
   <dd>{$me.username}</dd>
 
+  <dt>Name:</dt>
+  <dd>{$me.name}</dd>
+  
   <dt>ID:</dt>
   <dd>{$me.id}</dd>
 </DL>
