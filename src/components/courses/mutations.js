@@ -5,5 +5,14 @@ mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
   createCourse(name:$name, code: $code, termId: $termId){ 
     id
     name
+    term {
+      id
+    }
+    students {
+      id
+    }
+    teachers {
+      id
+    }
   }
 }`

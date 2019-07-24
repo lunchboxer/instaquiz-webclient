@@ -2,7 +2,8 @@
   import Modal from '../Modal.svelte'
   import CourseForm from './CourseForm.svelte'
   import { notifications } from '../notifications'
-  import { courses } from './data'
+  import { deluxeRequest } from '../../data/dispatcher'
+  import { CREATE_COURSE } from './mutations'
 
   let errors = ''
   let open = false
@@ -17,7 +18,7 @@
   const save = async ({ detail }) => {
     loading = true
     try {
-      await courses.create(detail)
+      await deluxeRequest({ query: CREATE_COURSE, variables: { ...detail }, parentKey: 'courses' })
       notifications.add({ text: `Saved new course '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {

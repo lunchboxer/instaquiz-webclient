@@ -1,17 +1,14 @@
 <script>
   import { onMount } from 'svelte'
-  import { terms } from '../terms/data'
+  import { terms, currentTerm } from '../../data/terms'
 
   export let termId = ''
   let termSelect
 
   onMount(async () => {
-    await terms.get()
     if (!termId) { // not already chosen then get default
-      const now = new Date().toISOString()
-      const current = $terms.find(t => t.startDate < now && t.endDate > now)
-      if (current) {
-        termId = current.id
+      if ($currentTerm) {
+        termId = $currentTerm.id
       }
     }
   })
@@ -31,11 +28,11 @@
 
   <select value={termId} on:change={handleChange} bind:this={termSelect}>
     {#if $terms}
-    {#each $terms as {id, name} (id)}
-    <option value={id}>{name}</option>
-    {/each}
+      {#each Object.keys($terms) as term (term)}
+        <option value={$terms[term].id}>{$terms[term].name}</option>
+      {/each}
     {:else}
-    <option value="">Loading terms...</option>
+      <option value="">Loading terms...</option>
     {/if}
   </select>
 </div>
