@@ -1,10 +1,10 @@
 <script>
-  import { notifications } from './notifications'
-  import { auth } from '../data/auth'
-  import { ADD_TO_COURSE } from '../data/mutations'
-  import { request } from '../data/fetch-client'
-  import Input from './Input.svelte'
-  import Error from './Error.svelte'
+  import { notifications } from '../notifications'
+  import { auth } from '../../data/auth'
+  import { ADD_STUDENT_TO_COURSE } from '../../data/mutations'
+  import { request } from '../../data/fetch-client'
+  import Input from '../Input.svelte'
+  import Error from '../Error.svelte'
 
   let code = ''
   let form
@@ -24,7 +24,7 @@
     loading = true
     submit.disabled = true
     try {
-      const response = await request(ADD_TO_COURSE, { id: $auth.id, code })
+      const response = await request(ADD_STUDENT_TO_COURSE, { id: $auth.id, code })
       errors = ''
       notifications.add({ text: `Student ${$auth.name} added to ${response.addStudentToCourse.name}`, type: 'success' })
     } catch (error) {

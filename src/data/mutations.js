@@ -27,13 +27,35 @@ export const SIGNUP = gql`
     }
   }
 `
-export const ADD_TO_COURSE = gql`
+export const ADD_STUDENT_TO_COURSE = gql`
 mutation ($id: ID!, $code: String!){
   addStudentToCourse(id: $id, code: $code ) {
     id
     name
-    term {
-      name
+    students {
+      id
+    }
+  }
+}`
+
+export const ADD_TEACHER_TO_COURSE = gql`
+mutation ($id: ID!, $courseId: ID!){
+  addTeacherToCourse(id: $id, courseId: $courseId ) {
+    id
+    name
+    teachers {
+      id
+    }
+  }
+}`
+
+export const REMOVE_TEACHER_FROM_COURSE = gql`
+mutation ($id: ID!, $courseId: ID!){
+  removeTeacherFromCourse(id: $id, courseId: $courseId ) {
+    id
+    name
+    teachers {
+      id
     }
   }
 }`

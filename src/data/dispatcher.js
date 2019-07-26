@@ -1,7 +1,8 @@
 import normalize from 'universal-normalizer'
-import { writable } from 'svelte/store'
 import { request } from './fetch-client'
 import { terms } from './terms'
+import { students } from './students'
+import { teachers } from './teachers'
 import { courses } from './courses'
 
 function extend (object, source) {
@@ -10,9 +11,6 @@ function extend (object, source) {
 }
 
 export const getIDsarray = (arrayOfObjects) => arrayOfObjects.map(i => i.id)
-
-export const students = writable({})
-export const teachers = writable({})
 
 const stores = { terms, courses, students, teachers }
 

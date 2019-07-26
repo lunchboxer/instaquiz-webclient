@@ -1,13 +1,13 @@
 import Signup from './components/Signup.svelte'
 import Dashboard from './components/dashboard/Dashboard.svelte'
 import NotFound from './components/NotFound.svelte'
-import AddToCourse from './components/AddToCourse.svelte'
+import AddStudentToCourse from './components/courses/AddStudentToCourse.svelte'
 import Profile from './components/profile/Profile.svelte'
 
 export default {
   '/': Dashboard,
   '/signup': Signup,
-  '/join-course': AddToCourse,
+  '/join-course': AddStudentToCourse,
   '/me': Profile,
   '*': NotFound
 }

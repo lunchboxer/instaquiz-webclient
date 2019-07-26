@@ -3,26 +3,18 @@
   import { notifications } from '../notifications'
   import Error from '../Error.svelte'
   import { auth } from '../../data/auth'
-  import { request } from '../../data/fetch-client'
   import Loading from '../Loading.svelte'
-  import { GET_TERMS, GET_MY_COURSES } from './queries'
+  import { GET_TERMS } from './queries'
   import AddCourse from '../courses/AddCourse.svelte'
   import CreateTerm from '../terms/CreateTerm.svelte'
-  import CourseListRow from './CourseListRow.svelte'
+  import CourseList from './CourseList.svelte'
   import { deluxeRequest } from '../../data/dispatcher'
   import { currentTerm, nextTerm } from '../../data/terms'
 
   let errors = ''
   let isLoading = true
-  let teaching = []
-  let attending = []
 
   onMount(async () => {
-    const myresponse = await request(GET_MY_COURSES, { id: $auth.id })
-    if (myresponse && myresponse.user) {
-      teaching = myresponse.user.coursesTeaching.map(i => i.id)
-      attending = myresponse.user.coursesAttending.map(i => i.id)
-    }
     try {
       deluxeRequest({ query: GET_TERMS, parentKey: 'terms' })
     } catch (error) {
@@ -56,16 +48,11 @@
     {#if !$currentTerm}
       <p>There is no term currently in session.</p>
       <CreateTerm/>
-    {:else if $currentTerm.courses && $currentTerm.courses.length === 0}
-      <h2 class="title is-5">There are no courses for {$currentTerm.name}.</h2>
-      <AddCourse termId={currentTerm.id} />
-      {:else}
+    {:else if $currentTerm.courses}
       <h2 class="title is-5">{$currentTerm.courses.length} courses in {$currentTerm.name} </h2>
-      {#each $currentTerm.courses as course (course)}
-        <CourseListRow {course} {attending}/>
-      {/each}
-      <AddCourse termId={currentTerm.id} />
-    {/if} <!-- currentTerm-->
+      <CourseList courses={$currentTerm.courses} />
+      <AddCourse termId={$currentTerm.id} />
+    {/if} <!-- !$currentTerm-->
   </section>
 
   <section class="term">
@@ -77,10 +64,14 @@
     {:else}
       <h2 class="title is-5">{$nextTerm.courses.length} courses in upcoming term: {$nextTerm.name} </h2>
       {#each $nextTerm.courses as course}
-        <CourseListRow {course} {teaching}/>
+        <!-- <CourseListRow {course} /> -->
       {/each}
       <AddCourse termId={$nextTerm.id} />
     {/if} <!-- !$nextTerm -->
   </section>
+
+  {#if $auth.role === 'Student'}
+    <a href="#/join-course" class="button">Join a course</a>
+  {/if}
 
 {/if} <!-- isLoading -->
