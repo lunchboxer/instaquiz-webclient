@@ -6,7 +6,6 @@
   import { auth } from '../../data/auth'
   import { sessions } from '../../data/sessions'
   import { courses } from '../../data/courses'
-  import { extend } from '../../data/dispatcher'
 
   let myUpcomingSessions = []
 
@@ -14,9 +13,9 @@
     const response = await request(GET_MY_SESSIONS, { id: $auth.id, now: new Date().toJSON() })
     if (response && response.sessions && response.sessions.length > 0) {
       myUpcomingSessions = response.sessions.map(s => s.id)
-      const normalized = normalize(response.sessions, 'sessions', { entities: {} })
-      sessions.update(previous => extend(previous, normalized.entities.sessions))
-      courses.update(previous => extend(previous, normalized.entities.course))
+      const normalized = normalize(response.sessions, 'sessions')
+      sessions.merge(normalized.entities.sessions)
+      courses.megre(normalized.entities.course)
     }
   })
 </script>

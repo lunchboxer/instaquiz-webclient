@@ -45,6 +45,7 @@ mutation ($id: ID!, $courseId: ID!){
     name
     teachers {
       id
+      name
     }
   }
 }`

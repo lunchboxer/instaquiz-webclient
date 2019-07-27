@@ -39,11 +39,6 @@
     }
   }
 </script>
-<style>
-  button {
-    margin: 0.5rem;
-  }
-</style>
 
-<button class="button" class:is-loading={loading} on:click={leaveCourse}>leave</button>
+<button class="button" class:is-loading={loading} on:click={leaveCourse}>Leave</button>
 <Error {errors} />

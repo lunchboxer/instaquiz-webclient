@@ -67,6 +67,7 @@ export function normalize (oldData, parentTableName, previousEntities) {
   // in a given object, check if any descendants are objects or arrays
   // if an object or array is found, it passes the value and key
   var checkForNestedObjects = function checkForNestedObjects (object) {
+    debugger
     var objectTableName =
       arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null
 

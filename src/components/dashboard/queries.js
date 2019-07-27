@@ -35,3 +35,16 @@ query ($id: ID!){
   }
 }
 `
+
+export const COURSE_SESSIONS = gql`
+query CourseSessions($courseId: ID!){
+  sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
+    id
+    course {
+      id
+    }
+    startsAt
+    endsAt
+  }
+}
+`

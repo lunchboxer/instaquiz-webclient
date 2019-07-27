@@ -1,3 +1,14 @@
 import { writable } from 'svelte/store'
+import { extend } from './utils'
 
-export const teachers = writable({})
+const createTeachersStore = () => {
+  const { subscribe, update } = writable({})
+  return {
+    subscribe,
+    update,
+    merge: (newItems) => {
+      update(previous => extend(previous, newItems))
+    }
+  }
+}
+export const teachers = createTeachersStore()
