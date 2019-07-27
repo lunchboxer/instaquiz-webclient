@@ -18,8 +18,6 @@
       return $auth.name === name ? 'You' : name
     })
   }
-
-  console.log(getTeachers(course))
 </script>
 
 <style>
@@ -35,7 +33,7 @@
   }
 </style>
 
-<li><strong>{$courses[course].name}</strong>
+<li>{$courses[course].name}
   {#if $auth.role === 'Teacher'}
     <em class="whosinit">
       {#if !$courses[course].teachers.length}

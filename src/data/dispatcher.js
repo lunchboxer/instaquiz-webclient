@@ -1,18 +1,19 @@
-import normalize from 'universal-normalizer'
+import { normalize } from './normalizer'
 import { request } from './fetch-client'
 import { terms } from './terms'
 import { students } from './students'
 import { teachers } from './teachers'
 import { courses } from './courses'
+import { sessions } from './sessions'
 
-function extend (object, source) {
+export function extend (object, source) {
   Object.keys(source).forEach(function (key) { object[key] = source[key] })
   return object
 }
 
 export const getIDsarray = (arrayOfObjects) => arrayOfObjects.map(i => i.id)
 
-const stores = { terms, courses, students, teachers }
+const stores = { terms, courses, students, teachers, sessions }
 
 export const deluxeRequest = async ({ query, variables, remove = false, parentKey }) => {
   const response = await request(query, variables)
@@ -23,14 +24,14 @@ export const deluxeRequest = async ({ query, variables, remove = false, parentKe
     })
     return true
   }
-  console.log('response', response)
+
   // assumes the data in the response is the only property of the object
   // this doesn't seem like a safe assumption
   // probably best to get it from the query with regex
-  const normalized = normalize(response[Object.keys(response)[0]], parentKey)
-  console.log('normalized', normalized)
+  const newResponse = { ...response }
+  const normalized = normalize(newResponse[Object.keys(response)[0]], parentKey)
   for (const type in normalized.entities) {
-    if (normalized.entities.hasOwnProperty(type)) {
+    if ({}.hasOwnProperty.call(normalized.entities, type)) {
       stores[type].update(previous => extend(previous, normalized.entities[type]))
     }
   }

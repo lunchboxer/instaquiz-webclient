@@ -30,8 +30,10 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.9.0",
     "flatpickr": "^4.6.2",
+    "graphql-normalizr": "^2.7.1",
     "graphql-subscriptions-client": "^0.11.0",
     "nanographql": "^2.0.0",
+    "normalizr": "^3.4.0",
     "sirv-cli": "^0.4.4",
     "svelte-spa-router": "^1.1.3",
     "universal-normalizer": "^1.0.5"

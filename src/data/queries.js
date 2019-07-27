@@ -1,21 +1,5 @@
 import gql from 'nanographql'
 
-export const GET_STUDENT = gql`
-query student($id: ID!) { 
-  student (id: $id){
-    chineseName
-    pinyinName
-    englishName
-    id
-    groups {
-      name
-    }
-    gender
-    pointsTally
-  }
-}
-`
-
 export const ME = gql`
 {
   me {
@@ -24,35 +8,20 @@ export const ME = gql`
   }
 }`
 
-export const ACTIVE_GROUPS = gql`
-{
-  activeGroups {
+export const GET_MY_SESSIONS = gql`
+query GetMYSessions($id: ID!, $now: DateTime!){
+  sessions( orderBy: startsAt_ASC, where: { AND: [ 
+    { OR: [
+      { course: { teachers_some: { id: $id } }},
+      { course: { students_some: { id: $id } }}
+    ]},
+    { endsAt_gte: $now }
+  ]}){
     id
-    name
-    semester {
-      name
-    }
-  }
-}
-`
-
-export const CURRENT_NEXT_SEMESTER_GROUPS = gql`
-{
-  currentSemester {
-    id
-    name
-    groups {
+    startsAt
+    endsAt
+    course {
       id
-      name
     }
   }
-  nextSemester {
-    id
-    name
-    groups {
-      id
-      name
-    }
-  }
-}
-`
+}`

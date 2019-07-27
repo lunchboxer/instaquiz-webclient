@@ -1,6 +1,6 @@
 const fetch = window.fetch
 
-const endpoint = 'http://192.168.1.9:4001'
+const endpoint = 'http://localhost:4001'
 
 export const request = async (query, variables) => {
   const coldAuth = window.localStorage.getItem('auth')
@@ -12,7 +12,7 @@ export const request = async (query, variables) => {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': token || ''
+      Authorization: token || ''
     },
     body
   })
