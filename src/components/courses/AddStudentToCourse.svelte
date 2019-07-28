@@ -1,8 +1,9 @@
 <script>
+  import { mutate } from 'svelte-apollo'
   import { notifications } from '../notifications'
   import { auth } from '../../data/auth'
   import { ADD_STUDENT_TO_COURSE } from '../../data/mutations'
-  import { request } from '../../data/fetch-client'
+  import { client } from '../../data/apollo'
   import Input from '../Input.svelte'
   import Error from '../Error.svelte'
 
@@ -24,9 +25,12 @@
     loading = true
     submit.disabled = true
     try {
-      const response = await request(ADD_STUDENT_TO_COURSE, { id: $auth.id, code })
+      const response = await mutate(client, {
+        mutation: ADD_STUDENT_TO_COURSE,
+        variables: { id: $auth.id, code }
+      })
       errors = ''
-      notifications.add({ text: `Student ${$auth.name} added to ${response.addStudentToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Student ${$auth.name} added to ${response.data.addStudentToCourse.name}`, type: 'success' })
     } catch (error) {
       errors = error
       notifications.add({ text: 'registration failed.', type: 'danger' })

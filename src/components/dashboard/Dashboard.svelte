@@ -1,31 +1,26 @@
 <script>
-  import { onMount } from 'svelte'
-  import { notifications } from '../notifications'
-  import Error from '../Error.svelte'
+  import { TERMS_AND_ALL } from '../../data/queries'
+  import { query } from 'svelte-apollo'
+  import { client } from '../../data/apollo'
   import { auth } from '../../data/auth'
   import Loading from '../Loading.svelte'
-  import { GET_TERMS } from './queries'
+  import Error from '../Error.svelte'
   import AddCourse from '../courses/AddCourse.svelte'
-  import CreateTerm from '../terms/CreateTerm.svelte'
   import CourseList from './CourseList.svelte'
-  import { deluxeRequest } from '../../data/dispatcher'
-  import { currentTerm, nextTerm } from '../../data/terms'
+  import CreateTerm from '../terms/CreateTerm.svelte'
   import UpcomingSessions from './UpcomingSessions.svelte'
 
-  let errors = ''
-  let isLoading = true
+  const terms = query(client, { query: TERMS_AND_ALL })
 
-  onMount(async () => {
-    try {
-      await deluxeRequest({ query: GET_TERMS, parentKey: 'terms' })
-    } catch (error) {
-      errors = error
-      notifications.add({ text: "Couldn't get terms from server", type: 'danger' })
-    } finally {
-      isLoading = false
-    }
+  const now = new Date().toJSON()
+
+  const getCurrent = (terms) => terms.find(term => {
+    return term.startDate < now && term.endDate > now
   })
+
+  const getNext = (terms) => terms.find(t => t.startDate > now)
 </script>
+
 
 <style>
   section.term {
@@ -40,43 +35,55 @@
 <h1 class="title is-3">Dashboard</h1>
 
 <UpcomingSessions />
-<Error {errors} />
 
-{#if isLoading}
-    <Loading what="Terms and courses" />
-{:else}
- 
-  {#if !$currentTerm}
+{#await $terms}
+  <Loading what="terms and courses" />
+{:then result}
+
+  {#if !getCurrent(result.data.terms)}
+
     <p>There is no term currently in session.</p>
+
   {:else}
+
     <section class="term">
-      {#if $currentTerm.courses}
-        <h2 class="title is-4">{$currentTerm.courses.length} courses in {$currentTerm.name} </h2>
-        <CourseList courses={$currentTerm.courses} />
+
+      {#if getCurrent(result.data.terms).courses}
+        <h2 class="title is-4">{getCurrent(result.data.terms).courses.length} courses in {getCurrent(result.data.terms).name} </h2>
+        <CourseList courses={getCurrent(result.data.terms).courses} />
         {#if $auth.role === 'Teacher'}
-          <AddCourse termId={$currentTerm.id} />
+          <AddCourse termId={getCurrent(result.data.terms).id} />
         {/if}
-      {/if} <!-- $currentTerm.courses-->
+      {/if} <!-- getCurrent(result.data.terms).courses -->
+
     </section>
-  {/if} <!-- !$currentTerm-->
 
-  {#if $auth.role === 'Teacher'}
-    {#if !$nextTerm}
-      <p>There are also no upcoming terms recorded yet.</p>
-      <CreateTerm/>
-    {:else}
-      <section class="term">
-        {#if $nextTerm.courses}
-          <h2 class="title is-4">{$nextTerm.courses.length} courses in upcoming term: {$nextTerm.name}</h2>
-          <CourseList courses={$nextTerm.courses} />
-          <AddCourse termId={$nextTerm.id} />
-        {/if} <!-- $nextTerm.courses-->
-      </section>
-    {/if} <!-- !$nextTerm -->
-  {/if} <!-- $auth.role === 'Teacher -->
-
-  {#if $auth.role === 'Student'}
-    <a href="#/join-course" class="button">Join a course</a>
-  {/if}
-
-{/if} <!-- isLoading -->
+  {/if} <!-- getCurrent(result.data.terms) -->
+  
+    {#if $auth.role === 'Teacher'}
+      {#if !getNext(result.data.terms)}
+  
+        <p>There are also no upcoming terms recorded yet.</p>
+        <CreateTerm/>
+  
+      {:else}
+  
+        <section class="term">
+          {#if getNext(result.data.terms).courses}
+            <h2 class="title is-4">{getNext(result.data.terms).courses.length} courses in upcoming term: {getNext(result.data.terms).name}</h2>
+            <CourseList courses={getNext(result.data.terms).courses} />
+            <AddCourse termId={getNext(result.data.terms).id} />
+          {/if} <!-- getNext(result.data.terms).courses -->
+        </section>
+  
+      {/if} <!-- !getNext(result.data.terms) -->
+    {/if} <!-- $auth.role === 'Teacher -->
+  
+    {#if $auth.role === 'Student'}
+      <a href="#/join-course" class="button">Join a course</a>
+    {/if}
+  
+  {:catch errors}
+    <Error {errors} />
+  {/await}
+    

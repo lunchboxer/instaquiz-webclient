@@ -1,5 +1,8 @@
 <script>
+<<<<<<< HEAD
   import { courses } from '../../data/courses'
+=======
+>>>>>>> apollo
   import CourseDetails from './CourseDetails.svelte'
   import IconButton from '../IconButton.svelte'
 
@@ -25,9 +28,16 @@
 
 <li>
   <div class="item-header" on:click={() => { show = !show }}>
+<<<<<<< HEAD
     <span>{$courses[course].name}</span>
     <IconButton name="angle-{show ? 'up' : 'down'}" />
   </div>
+=======
+    <span>{course.name}</span>
+    <IconButton name="angle-{show ? 'up' : 'down'}" />
+  </div>
+
+>>>>>>> apollo
   {#if show}
     <CourseDetails {course}/>
   {/if}

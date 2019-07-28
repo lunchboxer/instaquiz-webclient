@@ -1,8 +1,7 @@
 <script>
+  import { mutate } from 'svelte-apollo'
   import { notifications } from '../notifications'
-  import { request } from '../../data/fetch-client'
-  import { teachers } from '../../data/teachers'
-  import { courses } from '../../data/courses'
+  import { client } from '../../data/apollo'
   import Error from '../Error.svelte'
   import { REMOVE_TEACHER_FROM_COURSE } from '../../data/mutations'
 
@@ -15,25 +14,15 @@
   const leaveCourse = async () => {
     loading = true
     try {
-      const response = await request(REMOVE_TEACHER_FROM_COURSE, {
-        id: user,
-        courseId: course
+      const response = await mutate(client, {
+        mutation: REMOVE_TEACHER_FROM_COURSE,
+        variables: { id: user, courseId: course.id }
       })
-      courses.update(previous => {
-        previous[course].teachers = response.removeTeacherFromCourse.teachers
-        return previous
-      })
-      teachers.update(previous => {
-        previous[user].courses = previous[user].courses.filter(c => c !== course)
-        return previous
-      })
-
       errors = ''
-      notifications.add({ text: `Successfully removed teacher from ${response.removeTeacherFromCourse.name}`, type: 'success' })
+      notifications.add({ text: `Successfully added teacher to ${response.data.removeTeacherFromCourse.name}`, type: 'success' })
     } catch (error) {
       errors = error
-      console.error(error)
-      notifications.add({ text: 'Failed to remove teacher from course', type: 'danger' })
+      notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })
     } finally {
       loading = false
     }

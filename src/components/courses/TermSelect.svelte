@@ -1,17 +1,12 @@
 <script>
-  import { onMount } from 'svelte'
-  import { terms, currentTerm } from '../../data/terms'
+  import { query } from 'svelte-apollo'
+  import { client } from '../../data/apollo'
+  import { TERMS } from '../../data/queries'
 
   export let termId = ''
   let termSelect
 
-  onMount(async () => {
-    if (!termId) { // not already chosen then get default
-      if ($currentTerm) {
-        termId = $currentTerm.id
-      }
-    }
-  })
+  const terms = query(client, { query: TERMS })
 
   const handleChange = () => {
     termId = termSelect.value
@@ -26,13 +21,15 @@
 
 <div class="select">
 
-  <select value={termId} on:change={handleChange} bind:this={termSelect}>
-    {#if $terms}
-      {#each Object.keys($terms) as term (term)}
-        <option value={$terms[term].id}>{$terms[term].name}</option>
+  <select bind:value={termId} on:change={handleChange} bind:this={termSelect}>
+    {#await $terms}
+      <option>Loading...</option>
+    {:then result}
+      {#each result.data.terms as term (term.id)}
+      <option value={term.id} selected={term.id === termId}>{term.name}</option>
       {/each}
-    {:else}
-      <option value="">Loading terms...</option>
-    {/if}
+    {:catch}
+      <option />
+    {/await}
   </select>
 </div>
