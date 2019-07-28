@@ -30,7 +30,7 @@
 {#if $notifications}
 <div class="notification-list">
   {#each Object.entries($notifications) as [id, message] (id)}
-  <div transition:fly="{{x:400}}" >
+  <div transition:fly="{{ x: 400 }}" >
       <NotificationItem message={message} id={id} />
   </div>
    

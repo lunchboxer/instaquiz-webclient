@@ -37,8 +37,8 @@
 
   const addHooks = (options) => {
     options = Object.assign({}, options)
-    for (let hook of hooks) {
-      let dispatcher = (selectedDates, dateString, instance) => {
+    for (const hook of hooks) {
+      const dispatcher = (selectedDates, dateString, instance) => {
         dispatch(stripOn(hook), [selectedDates, dateString, instance])
       }
       if (hook in options) {

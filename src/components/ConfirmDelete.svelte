@@ -1,13 +1,13 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher } from 'svelte'
   import Error from './Error.svelte'
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher()
 
   export let open = false
   export let loading = false
   export let errors = ''
-  export let name = "item"
+  export let name = 'item'
 
   const handleDelete = async () => {
     dispatch('delete')

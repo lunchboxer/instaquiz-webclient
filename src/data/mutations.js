@@ -52,16 +52,7 @@ ${CourseFields}`
 export const ADD_TEACHER_TO_COURSE = gql`
 mutation ($id: ID!, $courseId: ID!){
   addTeacherToCourse(id: $id, courseId: $courseId ) {
-<<<<<<< HEAD
-    id
-    name
-    teachers {
-      id
-      name
-    }
-=======
     ...CourseFields
->>>>>>> apollo
   }
 }
 ${CourseFields}`
