@@ -19,10 +19,10 @@
         variables: { id: user, courseId: course.id }
       })
       errors = ''
-      notifications.add({ text: `Successfully added teacher to ${response.data.removeTeacherFromCourse.name}`, type: 'success' })
+      notifications.add({ text: `Successfully removed teacher from ${response.data.removeTeacherFromCourse.name}`, type: 'success' })
     } catch (error) {
       errors = error
-      notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })
+      notifications.add({ text: 'Failed remove teacher from course course', type: 'danger' })
     } finally {
       loading = false
     }
