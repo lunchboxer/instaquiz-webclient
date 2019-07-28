@@ -1,6 +1,6 @@
 # InstaQuiz
 
-This is [Svelte](https://svelte.technology) app to provide instant quizes on student devices in the classroom. It's based on [svelte v3 webpack template](https://github.com/sveltejs/template-webpack#v3).
+**This app is in development and doesn't do anything useful yet**. This is a [Svelte](https://svelte.technology) app to provide instant quizes on student devices in the classroom. It's based on [svelte v3 webpack template](https://github.com/sveltejs/template-webpack#v3).
 
 ## Get started
 
