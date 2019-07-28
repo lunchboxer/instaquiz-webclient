@@ -19,13 +19,11 @@
 
   const save = async ({ detail }) => {
     loading = true
-    console.log(detail)
     try {
       await mutate(client, {
         mutation: CREATE_COURSE,
         variables: { ...detail },
         update: (cache, { data: { createCourse } }) => {
-          console.log(createCourse)
           const data = cache.readQuery({ query: TERMS_AND_ALL })
           const index = data.terms.findIndex(t => t.id === createCourse.term.id)
           data.terms[index].courses.push(createCourse)

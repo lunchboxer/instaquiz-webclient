@@ -15,21 +15,10 @@
     try {
       const response = await mutate(client, {
         mutation: ADD_TEACHER_TO_COURSE,
-        variables: { id: user, courseId: course.id },
-        update: (cache, { data: { addTeacherToCourse } }) => {
-          console.log(addTeacherToCourse)
-        }
+        variables: { id: user, courseId: course.id }
       })
-      // const response = await deluxeRequest({
-      //   query: ADD_TEACHER_TO_COURSE,
-      //   variables: {
-      //     id: user,
-      //     courseId: course
-      //   },
-      //   parentKey: 'courses'
-      // })
       errors = ''
-      notifications.add({ text: `Successfully added teacher to ${response.addTeacherToCourse.name}`, type: 'success' })
+      notifications.add({ text: `Successfully added teacher to ${response.data.addTeacherToCourse.name}`, type: 'success' })
     } catch (error) {
       errors = error
       notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })

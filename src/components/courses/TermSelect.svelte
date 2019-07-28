@@ -11,8 +11,6 @@
   const handleChange = () => {
     termId = termSelect.value
   }
-
-  $: console.log(termId)
 </script>
 
 <style>

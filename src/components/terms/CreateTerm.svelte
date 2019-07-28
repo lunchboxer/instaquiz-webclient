@@ -1,8 +1,11 @@
 <script>
+  import { mutate } from 'svelte-apollo'
+  import { client } from '../../data/apollo'
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
   import TermForm from './TermForm.svelte'
-  import { CREATE_TERM } from './mutations'
+  import { CREATE_TERM } from '../../data/mutations'
+  import { TERMS_AND_ALL } from '../../data/queries'
 
   let loading = false
   let errors = ''
@@ -16,7 +19,15 @@
   const save = async ({ detail }) => {
     loading = true
     try {
-      // do it
+      await mutate(client, {
+        mutation: CREATE_TERM,
+        variables: { ...detail },
+        update: (cache, { data: { createTerm } }) => {
+          const data = cache.readQuery({ query: TERMS_AND_ALL })
+          data.terms.push(createTerm)
+          cache.writeQuery({ query: TERMS_AND_ALL, data })
+        }
+      })
       notifications.add({ text: `Saved new term '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {

@@ -9,8 +9,19 @@ export const CourseFields = gql`
     }
     teachers {
       id
+      name
     }
     students {
+      id
+    }
+  }`
+
+export const SessionFields = gql`
+  fragment SessionFields on Session {
+    id
+    startsAt
+    endsAt
+    course {
       id
     }
   }`

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields } from './fragments'
+import { CourseFields, SessionFields } from './fragments'
 
 export const ME = gql`
 {
@@ -18,14 +18,10 @@ query GetMYSessions($id: ID!, $now: DateTime!){
     ]},
     { endsAt_gte: $now }
   ]}){
-    id
-    startsAt
-    endsAt
-    course {
-      id
-    }
+    ...SessionFields
   }
-}`
+}
+${SessionFields}`
 
 export const TERMS_AND_ALL = gql`
 {
@@ -52,12 +48,7 @@ export const TERMS = gql`
 export const COURSE_SESSIONS = gql`
 query CourseSessions($courseId: ID!){
   sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
-    id
-    course {
-      id
-    }
-    startsAt
-    endsAt
+    ...SessionFields
   }
 }
-`
+${SessionFields}`

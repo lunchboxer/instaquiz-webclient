@@ -1,17 +1,31 @@
 <script>
+  import { mutate } from 'svelte-apollo'
   import { notifications } from '../notifications'
-  // import { request } from '../../data/fetch-client'
+  import { client } from '../../data/apollo'
   import Error from '../Error.svelte'
   import { REMOVE_TEACHER_FROM_COURSE } from '../../data/mutations'
 
   export let user
   export let course
 
-  const loading = false
-  const errors = ''
+  let loading = false
+  let errors = ''
 
-  const leaveCourse = () => {
-
+  const leaveCourse = async () => {
+    loading = true
+    try {
+      const response = await mutate(client, {
+        mutation: REMOVE_TEACHER_FROM_COURSE,
+        variables: { id: user, courseId: course.id }
+      })
+      errors = ''
+      notifications.add({ text: `Successfully added teacher to ${response.data.removeTeacherFromCourse.name}`, type: 'success' })
+    } catch (error) {
+      errors = error
+      notifications.add({ text: 'Failed to add teacher to course', type: 'danger' })
+    } finally {
+      loading = false
+    }
   }
 </script>
 <style>

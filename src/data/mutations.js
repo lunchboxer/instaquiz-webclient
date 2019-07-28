@@ -64,3 +64,19 @@ mutation ($id: ID!, $courseId: ID!){
   }
 }
 ${CourseFields}`
+
+// Terms
+
+export const CREATE_TERM = gql`
+  mutation CreateTerm($startDate: DateTime!, $endDate: DateTime!, $name: String!) {
+    createTerm(startDate: $startDate, endDate: $endDate, name: $name) {
+      id
+      startDate
+      endDate
+      name
+      courses {
+        id
+      }
+    }
+  }
+`

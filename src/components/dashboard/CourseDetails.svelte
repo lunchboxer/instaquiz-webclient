@@ -14,10 +14,9 @@
     query: COURSE_SESSIONS,
     variables: { courseId: course.id }
   })
-
   $: isCourseTeacher = course.teachers.find(t => t.id === $auth.id)
   $: teacherNames = course.teachers.map(teacher => {
-    return $auth.name === teacher.name ? 'You' : teacher.name
+    return $auth.id === teacher.id ? 'You' : teacher.name
   })
   const now = new Date().toJSON()
   const past = (sessions) => sessions.filter(s => s.endsAt < now)
