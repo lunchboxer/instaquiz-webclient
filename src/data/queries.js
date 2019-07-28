@@ -1,4 +1,5 @@
-import gql from 'nanographql'
+import gql from 'graphql-tag'
+import { CourseFields } from './fragments'
 
 export const ME = gql`
 {
@@ -25,3 +26,38 @@ query GetMYSessions($id: ID!, $now: DateTime!){
     }
   }
 }`
+
+export const TERMS_AND_ALL = gql`
+{
+  terms(orderBy: startDate_ASC) {
+    id
+    startDate
+    endDate
+    name
+    courses {
+      ...CourseFields
+    }
+  }
+}
+${CourseFields}`
+
+export const TERMS = gql`
+{
+  terms(orderBy: startDate_ASC) {
+    id
+    name
+  }
+}`
+
+export const COURSE_SESSIONS = gql`
+query CourseSessions($courseId: ID!){
+  sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
+    id
+    course {
+      id
+    }
+    startsAt
+    endsAt
+  }
+}
+`

@@ -1,4 +1,7 @@
-import gql from 'nanographql'
+import gql from 'graphql-tag'
+import { CourseFields } from './fragments'
+
+// Auth
 
 export const LOGIN = gql`
   mutation Login($username: String!, $password: String!) {
@@ -27,35 +30,37 @@ export const SIGNUP = gql`
     }
   }
 `
+
+// Courses
+
+export const CREATE_COURSE = gql`
+mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
+  createCourse(name:$name, code: $code, termId: $termId){ 
+    ...CourseFields
+  }
+}
+${CourseFields}`
+
 export const ADD_STUDENT_TO_COURSE = gql`
 mutation ($id: ID!, $code: String!){
   addStudentToCourse(id: $id, code: $code ) {
-    id
-    name
-    students {
-      id
-    }
+    ...CourseFields
   }
-}`
+}
+${CourseFields}`
 
 export const ADD_TEACHER_TO_COURSE = gql`
 mutation ($id: ID!, $courseId: ID!){
   addTeacherToCourse(id: $id, courseId: $courseId ) {
-    id
-    name
-    teachers {
-      id
-    }
+    ...CourseFields
   }
-}`
+}
+${CourseFields}`
 
 export const REMOVE_TEACHER_FROM_COURSE = gql`
 mutation ($id: ID!, $courseId: ID!){
   removeTeacherFromCourse(id: $id, courseId: $courseId ) {
-    id
-    name
-    teachers {
-      id
-    }
+    ...CourseFields
   }
-}`
+}
+${CourseFields}`

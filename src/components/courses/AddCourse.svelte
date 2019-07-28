@@ -1,9 +1,11 @@
 <script>
   import Modal from '../Modal.svelte'
+  import { mutate } from 'svelte-apollo'
   import CourseForm from './CourseForm.svelte'
   import { notifications } from '../notifications'
-  import { deluxeRequest } from '../../data/dispatcher'
-  import { CREATE_COURSE } from './mutations'
+  import { CREATE_COURSE } from '../../data/mutations'
+  import { TERMS_AND_ALL } from '../../data/queries'
+  import { client } from '../../data/apollo'
 
   let errors = ''
   let open = false
@@ -17,8 +19,20 @@
 
   const save = async ({ detail }) => {
     loading = true
+    console.log(detail)
     try {
-      await deluxeRequest({ query: CREATE_COURSE, variables: { ...detail }, parentKey: 'courses' })
+      await mutate(client, {
+        mutation: CREATE_COURSE,
+        variables: { ...detail },
+        update: (cache, { data: { createCourse } }) => {
+          console.log(createCourse)
+          const data = cache.readQuery({ query: TERMS_AND_ALL })
+          const index = data.terms.findIndex(t => t.id === createCourse.term.id)
+          data.terms[index].courses.push(createCourse)
+          cache.writeQuery({ query: TERMS_AND_ALL, data })
+        }
+      }
+      )
       notifications.add({ text: `Saved new course '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {

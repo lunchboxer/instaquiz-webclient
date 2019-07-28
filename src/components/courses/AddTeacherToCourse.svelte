@@ -1,7 +1,8 @@
 <script>
+  import { mutate } from 'svelte-apollo'
+  import { client } from '../../data/apollo'
   import { notifications } from '../notifications'
   import { ADD_TEACHER_TO_COURSE } from '../../data/mutations'
-  import { deluxeRequest } from '../../data/dispatcher'
   import Error from '../Error.svelte'
 
   export let user
@@ -12,14 +13,21 @@
   const joinCourse = async () => {
     loading = true
     try {
-      const response = await deluxeRequest({
-        query: ADD_TEACHER_TO_COURSE,
-        variables: {
-          id: user,
-          courseId: course
-        },
-        parentKey: 'courses'
+      const response = await mutate(client, {
+        mutation: ADD_TEACHER_TO_COURSE,
+        variables: { id: user, courseId: course.id },
+        update: (cache, { data: { addTeacherToCourse } }) => {
+          console.log(addTeacherToCourse)
+        }
       })
+      // const response = await deluxeRequest({
+      //   query: ADD_TEACHER_TO_COURSE,
+      //   variables: {
+      //     id: user,
+      //     courseId: course
+      //   },
+      //   parentKey: 'courses'
+      // })
       errors = ''
       notifications.add({ text: `Successfully added teacher to ${response.addTeacherToCourse.name}`, type: 'success' })
     } catch (error) {

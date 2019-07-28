@@ -1,51 +1,34 @@
 <script>
-  import { teachers } from '../../data/teachers'
-  import { courses } from '../../data/courses'
-  import { auth } from '../../data/auth'
-  import AddTeacherToCourse from '../courses/AddTeacherToCourse.svelte'
-  import RemoveTeacherFromCourse from '../courses/RemoveTeacherFromCourse.svelte'
+  import CourseDetails from './CourseDetails.svelte'
+  import IconButton from '../IconButton.svelte'
 
   export let course
-
-  const isCourseTeacher = () => {
-    if (!$teachers[$auth.id] || !$teachers[$auth.id].courses) return false
-    return $teachers[$auth.id].courses.includes(course)
-  }
-
-  const getTeachers = (courseId) => {
-    return $courses[courseId].teachers.map(teacherId => {
-      const name = $teachers[teacherId].name
-      return $auth.name === name ? 'You' : name
-    })
-  }
+  let show = false
 </script>
 
 <style>
   li {
-    margin: 1rem;
-    display: flex;
-    align-items: baseline;
+    list-style: none;
+    margin: 0.5rem;
+    padding: 0.5rem;
   }
 
-  em.whosinit {
-    color: lightgrey;
-    margin: 0.5rem;
+  li:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .item-header {
+    cursor: pointer;
   }
 </style>
 
-<li>{$courses[course].name}
-  {#if $auth.role === 'Teacher'}
-    <em class="whosinit">
-      {#if !$courses[course].teachers.length}
-        No teacher
-      {:else}
-        Teachers: {getTeachers(course).join(', ')}
-      {/if}
-    </em>
-    {#if !isCourseTeacher()}
-      <AddTeacherToCourse user={$auth.id} {course} />
-    {:else}
-      <RemoveTeacherFromCourse user={$auth.id} {course} />
-    {/if}
+<li>
+  <div class="item-header" on:click={() => { show = !show }}>
+    <span>{course.name}</span>
+    <IconButton name="angle-{show ? 'up' : 'down'}" />
+  </div>
+
+  {#if show}
+    <CourseDetails {course}/>
   {/if}
 </li>

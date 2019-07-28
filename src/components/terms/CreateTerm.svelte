@@ -2,7 +2,6 @@
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
   import TermForm from './TermForm.svelte'
-  import { deluxeRequest } from '../../data/dispatcher'
   import { CREATE_TERM } from './mutations'
 
   let loading = false
@@ -17,7 +16,7 @@
   const save = async ({ detail }) => {
     loading = true
     try {
-      await deluxeRequest({ query: CREATE_TERM, variables: { ...detail }, parentKey: 'terms' })
+      // do it
       notifications.add({ text: `Saved new term '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {
@@ -42,7 +41,7 @@
   }
 </style>
 
-<button class="button is-primary" on:click={()=> { open = true }}><i class="fas fa-plus"></i>Create a term</button>
+<button class="button is-primary" on:click={() => { open = true }}><i class="fas fa-plus"></i>Create a term</button>
 <Modal bind:open>
   <TermForm on:reset={reset} on:submit={save} {errors} {loading} />
 </Modal>

@@ -1,11 +1,13 @@
 import { writable } from 'svelte/store'
-import { request } from './fetch-client'
+import { client } from './apollo'
+import { mutate } from 'svelte-apollo'
 import { LOGIN, SIGNUP } from './mutations'
 
 const getAuthFromStorage = () => {
-  const coldAuth = window.localStorage.getItem('auth')
-  const user = coldAuth ? JSON.parse(coldAuth).user : null
-  const token = coldAuth ? JSON.parse(coldAuth).token : null
+  const coldToken = window.localStorage.getItem('token')
+  const coldUser = window.localStorage.getItem('user')
+  const token = coldToken ? JSON.parse(coldToken) : null
+  const user = coldUser ? JSON.parse(coldUser) : null
   return { user, token }
 }
 
@@ -17,27 +19,37 @@ const createAuthStore = () => {
   return {
     subscribe,
     login: async (username, password) => {
-      const response = await request(LOGIN, { username, password })
-      window.localStorage.setItem('auth', JSON.stringify(response.login))
+      const response = await mutate(client, {
+        mutation: LOGIN,
+        variables: { username, password }
+      })
+      window.localStorage.setItem('user', JSON.stringify(response.data.login.user))
+      window.localStorage.setItem('token', JSON.stringify(response.data.login.token))
       update(previous => ({
         ...previous,
-        ...response.login.user,
-        token: response.login.token
+        ...response.data.login.user,
+        token: response.data.login.token
       }))
     },
     signup: async (username, name, password) => {
-      const response = await request(SIGNUP, { username, name, password })
-      window.localStorage.setItem('auth', JSON.stringify(response.signup))
+      const response = await mutate(client, {
+        mutation: SIGNUP,
+        variables: { username, name, password }
+      })
+      window.localStorage.setItem('user', JSON.stringify(response.data.login.user))
+      window.localStorage.setItem('token', JSON.stringify(response.data.login.token))
       update(previous => ({
         ...previous,
-        ...response.signup.user,
-        token: response.signup.token
+        ...response.data.signup.user,
+        token: response.data.signup.token
       }))
     },
     logout: () => {
       const { user } = getAuthFromStorage()
-      window.localStorage.removeItem('auth')
+      window.localStorage.removeItem('token')
+      window.localStorage.removeItem('user')
       set({})
+      client.resetStore()
       return user && user.username
     }
   }

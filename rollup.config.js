@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import replace from 'rollup-plugin-replace'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
@@ -40,6 +41,9 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    }),
 
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
