@@ -6,7 +6,6 @@ import { HttpLink } from 'apollo-link-http'
 import { onError } from 'apollo-link-error'
 import { getMainDefinition } from 'apollo-utilities'
 import { setContext } from 'apollo-link-context'
-import resolvers from './resolvers'
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
@@ -61,8 +60,7 @@ const remoteLink = split(
 
 export const client = new ApolloClient({
   link: ApolloLink.from([errorsLink, authLink, remoteLink]),
-  cache,
-  resolvers
+  cache
 })
 
 const data = { isLoggedIn: !!window.localStorage.getItem('token') }
