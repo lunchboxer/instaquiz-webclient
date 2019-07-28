@@ -8,6 +8,7 @@
   import AddCourse from '../courses/AddCourse.svelte'
   import CourseList from './CourseList.svelte'
   import CreateTerm from '../terms/CreateTerm.svelte'
+  import UpcomingSessions from './UpcomingSessions.svelte'
 
   const terms = query(client, { query: TERMS_AND_ALL })
 
@@ -32,6 +33,8 @@
 </svelte:head>
 
 <h1 class="title is-3">Dashboard</h1>
+
+<UpcomingSessions />
 
 {#await $terms}
   <Loading what="terms and courses" />
