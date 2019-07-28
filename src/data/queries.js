@@ -5,7 +5,17 @@ export const ME = gql`
 {
   me {
     username
+    name
+    role
     id
+    coursesTeaching {
+      id
+      name
+    }
+    coursesAttending {
+      id
+      name
+    }
   }
 }`
 
