@@ -6,7 +6,7 @@
   import { CREATE_COURSE } from '../../data/mutations'
   // import { TERMS_AND_ALL } from '../../data/queries'
   import { client } from '../../data/apollo'
-  import { terms } from '../dashboard/Dashboard.svelte'
+  import { terms } from '../terms/TermsLoader.svelte'
 
   let errors = ''
   let open = false

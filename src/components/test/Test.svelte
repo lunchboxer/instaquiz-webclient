@@ -1,14 +1,10 @@
 <script>
-  import { onMount } from 'svelte'
   import { TERMS_AND_ALL } from '../../data/queries'
   import { query } from 'svelte-apollo'
   import { client } from '../../data/apollo'
-  import { auth } from '../../data/auth'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import AddCourse from '../courses/AddCourse.svelte'
-  import CourseList from '../dashboard/CourseList.svelte'
-  import CreateTerm from '../terms/CreateTerm.svelte'
   import UpcomingSessions from '../dashboard/UpcomingSessions.svelte'
   import DeleteCourse from '../courses/DeleteCourse.svelte'
 
