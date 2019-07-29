@@ -3,26 +3,16 @@
   import IconButton from '../IconButton.svelte'
 
   export let course
-  let show = false
+  const show = false
 </script>
 
 <style>
   li {
     list-style: none;
-    margin: 0.5rem;
-  }
-
-  li:hover {
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  .item-header {
-    cursor: pointer;
-    padding: 0.5rem;
   }
 </style>
 
-<li>
+<!-- <li>
   <div class="item-header" on:click={() => { show = !show }}>
     <span>{course.name}</span>
     <IconButton name="angle-{show ? 'up' : 'down'}" />
@@ -31,4 +21,5 @@
   {#if show}
     <CourseDetails {course}/>
   {/if}
-</li>
+</li> -->
+<li><a href="#/course/{course.id}">{course.name}</a></li>

@@ -4,6 +4,8 @@ import NotFound from './components/NotFound.svelte'
 import AddStudentToCourse from './components/courses/AddStudentToCourse.svelte'
 import Profile from './components/profile/Profile.svelte'
 import Test from './components/test/Test.svelte'
+import Terms from './components/terms/Terms.svelte'
+import Course from './components/courses/Course.svelte'
 
 export default {
   '/': Dashboard,
@@ -11,5 +13,7 @@ export default {
   '/join-course': AddStudentToCourse,
   '/me': Profile,
   '/test': Test,
+  '/terms': Terms,
+  '/course/:id': Course,
   '*': NotFound
 }

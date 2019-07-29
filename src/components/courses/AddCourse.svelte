@@ -6,7 +6,7 @@
   import { CREATE_COURSE } from '../../data/mutations'
   // import { TERMS_AND_ALL } from '../../data/queries'
   import { client } from '../../data/apollo'
-  import { terms } from '../terms/TermsLoader.svelte'
+  import { termsCache } from '../terms/TermsLoader.svelte'
 
   let errors = ''
   let open = false
@@ -35,7 +35,7 @@
       // const index = terms.findIndex(t => t.id === response.data.createCourse.term.id)
       // terms[index].courses.push({ ...response.data.createCourse, __typename: 'Course' })
       // restore(client, TERMS_AND_ALL, { terms })
-      terms.refetch()
+      termsCache.refetch()
       notifications.add({ text: `Saved new course '${detail.name}'`, type: 'success' })
       reset()
     } catch (error) {
@@ -60,7 +60,7 @@
   }
 </style>
 
-<button class="button is-primary" on:click={() => { open = true }}>
+<button class="button" on:click={() => { open = true }}>
   <i class="fas fa-plus"></i>Add a course
 </button>
 <Modal bind:open>

@@ -3,22 +3,30 @@
   import { query } from 'svelte-apollo'
   import { client } from '../../data/apollo'
 
-  export const terms = query(client, { query: TERMS_AND_ALL })
+  export const termsCache = query(client, { query: TERMS_AND_ALL })
 </script>
 
 <script>
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
-  import TermsList from './TermsList.svelte'
+
+  let terms
+  let errors = ''
+  let loading = true
+
+  $termsCache.then(cache => {
+    if (cache && cache.data && cache.data.terms) {
+      terms = cache.data.terms
+    }
+  }).catch(error => { errors = error })
+    .finally(() => { loading = false })
 </script>
 
-{#await $terms}
+{#if loading}
   <Loading what="terms and courses" />
-{:then result}
-  {#if result && result.data && result.data.terms}
-    <TermsList terms={result.data.terms} />
-  {/if}
-{:catch errors}
+{:else if terms}
+  <slot {terms}></slot>
+{:else if errors}
   <Error {errors} />
-{/await}
+{/if}
       

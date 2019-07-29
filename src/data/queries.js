@@ -56,9 +56,25 @@ export const TERMS = gql`
 }`
 
 export const COURSE_SESSIONS = gql`
-query CourseSessions($courseId: ID!){
-  sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
-    ...SessionFields
+  query CourseSessions($courseId: ID!){
+    sessions(orderBy: startsAt_ASC, where : { course: {id: $courseId}}) {
+      ...SessionFields
+    }
   }
-}
 ${SessionFields}`
+
+export const COURSE = gql`
+  query Course($id: ID!){
+    course(id: $id){
+      ...CourseFields
+      sessions {
+        ...SessionFields
+      }
+    }
+    terms {
+      id
+      name
+    }
+  }
+  ${SessionFields}
+  ${CourseFields}`

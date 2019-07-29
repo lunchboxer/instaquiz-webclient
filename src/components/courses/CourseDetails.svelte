@@ -1,37 +1,37 @@
 <script>
-  import { query } from 'svelte-apollo'
   import { auth } from '../../data/auth'
-  import { client } from '../../data/apollo'
   import AddTeacherToCourse from './AddTeacherToCourse.svelte'
   import RemoveTeacherFromCourse from './RemoveTeacherFromCourse.svelte'
   import DeleteCourse from './DeleteCourse.svelte'
   import DL from '../DL.svelte'
-  import { COURSE_SESSIONS } from '../../data/queries'
-  import Error from '../Error.svelte'
 
   export let course
-  let hasSessions
+  export let terms
 
-  const sessions = query(client, {
-    query: COURSE_SESSIONS,
-    variables: { courseId: course.id }
-  })
   $: isCourseTeacher = course.teachers.find(t => t.id === $auth.id)
+  $: isEnrolled = course.students.find(t => t.id === $auth.id)
   $: teacherNames = course.teachers.map(teacher => {
     return $auth.id === teacher.id ? 'You' : teacher.name
   })
   const now = new Date().toJSON()
-  const past = (sessions) => sessions.filter(s => s.endsAt < now)
-  const future = (sessions) => sessions.filter(s => s.endsAt > now)
-
-  $sessions.then(resolved => {
-    hasSessions = resolved && resolved.data && resolved.data.sessions && resolved.data.sessions.length > 0
-  })
+  $: past = course.sessions.filter(s => s.endsAt < now)
+  $: future = course.sessions.filter(s => s.endsAt > now)
+  $: term = terms.find(t => t.id === course.term.id)
 </script>
 
 <style>
-  .item-details {
-    padding: 0.5rem 1rem 1rem 1rem;
+  .registration {
+    display: inline-flex;
+    align-items: baseline;
+    margin-bottom: 1rem;
+  }
+
+  .registration span {
+    margin-right: 1rem;
+  }
+
+  .course-details {
+    padding: 1rem;
   }
 
   .buttons {
@@ -39,8 +39,32 @@
   }
 </style>
 
-<div class="item-details">
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#/Terms">Terms</a></li>
+    <li><a href="#/Courses">Courses</a></li>
+  </ul>
+</nav>
 
+<h1 class="title is-3">{course.name}</h1>
+<p class="subtitle">{term.name}</p>
+
+{#if $auth.role === 'Teacher'}
+  <p class="registration">
+    <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
+  {#if !isCourseTeacher}
+    <AddTeacherToCourse user={$auth.id} {course} />
+  {:else}
+    <RemoveTeacherFromCourse user={$auth.id} {course} />
+  {/if}
+  </p>
+{:else}
+  <p>You are{!isEnrolled ? "n't" : ''} enrolled in this class.</p>
+{/if}
+
+
+<div class="course-details">
   <DL>
     <dt>Teacher(s):</dt>
     <dd>
@@ -48,31 +72,19 @@
     </dd>
     <dt>Students:</dt>
     <dd>{course.students.length}</dd>
-    {#await $sessions}
+    {#if course.sessions}
       <dt>Past Sessions:</dt>
-      <dd>Loading...</dd>
+      <dd>{course.sessions.length}</dd>
       <dt>Current and Future sessions:</dt>
-      <dd>Loading...</dd>
-    {:then result}
-      <dt>Past Sessions:</dt>
-      <dd>{past(result.data.sessions).length}</dd>
-      <dt>Current and Future sessions:</dt>
-      <dd>{future(result.data.sessions).length}</dd>
-    {:catch errors}
-      <Error {errors}/>
-    {/await}
+      <dd>{course.sessions.length}</dd>
+    {/if}
 
   </DL>
 
   <div class="buttons">
     {#if $auth.role === 'Teacher'}
-      {#if !isCourseTeacher}
-        <AddTeacherToCourse user={$auth.id} {course} />
-      {:else}
-        <RemoveTeacherFromCourse user={$auth.id} {course} />
-      {/if}
         <!-- Can't be deleted if it has session connection -->
-      {#if !hasSessions}
+      {#if !course.sessions || course.sessions.length === 0}
         <DeleteCourse {course} />
       {/if}
    

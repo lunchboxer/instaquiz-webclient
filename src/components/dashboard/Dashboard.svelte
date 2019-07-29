@@ -1,5 +1,6 @@
 <script>
   import TermsLoader from '../terms/TermsLoader.svelte'
+  import TwoTermsList from './TwoTermsList.svelte'
   import UpcomingSessions from './UpcomingSessions.svelte'
 </script>
 
@@ -11,4 +12,6 @@
 
 <UpcomingSessions />
 
-<TermsLoader />
+<TermsLoader let:terms>
+  <TwoTermsList {terms} />
+</TermsLoader>
