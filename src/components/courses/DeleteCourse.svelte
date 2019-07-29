@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte'
+  import { notifications } from '../notifications'
   import { mutate } from 'svelte-apollo'
   import { client } from '../../data/apollo'
   import { DELETE_COURSE } from '../../data/mutations'
@@ -23,11 +24,14 @@
             return courseIndex > -1
           })
           data.terms[termIndex].courses.splice(courseIndex, 1)
+          console.log(data)
           cache.writeQuery({ query: TERMS_AND_ALL, data })
         }
       })
+      notifications.add({ text: 'Course delete successfully', type: 'success' })
       dispatch('delete')
     } catch (error) {
+      notifications.add({ text: 'Course could not be deleted', type: 'danger' })
     }
   }
 </script>

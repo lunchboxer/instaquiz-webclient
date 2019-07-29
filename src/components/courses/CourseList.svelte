@@ -3,7 +3,8 @@
 
   export let courses = []
 
-  $: teaching = courses.filter(c => c.teachers.find(t => t.id === $auth.id))
+  $: console.log('courses changed', courses)
+  $: teaching = courses && courses.filter(c => c.teachers.find(t => t.id === $auth.id))
   $: notTeaching = courses.filter(c => !c.teachers.find(t => t.id === $auth.id))
   $: attending = courses.filter(c => c.students.find(s => s.id === $auth.id))
   $: notAttending = courses.filter(c => !c.students.find(s => s.id === $auth.id))

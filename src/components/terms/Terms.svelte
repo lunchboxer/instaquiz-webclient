@@ -1,8 +1,14 @@
 <script>
-  import { auth } from '../../data/auth'
-  import TermsLoader from './TermsLoader.svelte'
+  import { TERMS_AND_ALL } from '../../data/queries'
+  import { query } from 'svelte-apollo'
+  import { client } from '../../data/apollo'
   import TermsList from './TermsList.svelte'
+  import Loading from '../Loading.svelte'
+  import Error from '../Error.svelte'
+  import { auth } from '../../data/auth'
   import CreateTerm from './CreateTerm.svelte'
+
+  const termsCache = query(client, { query: TERMS_AND_ALL })
 </script>
 
 <svelte:head>
@@ -22,6 +28,10 @@
   <CreateTerm />
 {/if}
 
-<TermsLoader let:terms>
-  <TermsList {terms} />
-</TermsLoader>
+{#await $termsCache}
+  <Loading what="terms and courses" />
+{:then result}
+  <TermsList terms={result.data.terms}/>
+{:catch errors}
+  <Error {errors}/>
+{/await}
