@@ -10,6 +10,7 @@
   import Error from '../Error.svelte'
 
   export let course
+  let hasSessions
 
   const sessions = query(client, {
     query: COURSE_SESSIONS,
@@ -22,6 +23,10 @@
   const now = new Date().toJSON()
   const past = (sessions) => sessions.filter(s => s.endsAt < now)
   const future = (sessions) => sessions.filter(s => s.endsAt > now)
+
+  $sessions.then(resolved => {
+    hasSessions = resolved && resolved.data && resolved.data.sessions && resolved.data.sessions.length > 0
+  })
 </script>
 
 <style>
@@ -66,7 +71,11 @@
       {:else}
         <RemoveTeacherFromCourse user={$auth.id} {course} />
       {/if}
+        <!-- Can't be deleted if it has session connection -->
+      {#if !hasSessions}
         <DeleteCourse {course} />
+      {/if}
+   
     {/if}
   </div>
   

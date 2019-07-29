@@ -7,8 +7,6 @@
   export let course
   const loading = false
 
-  const terms = client.readQuery({ query: TERMS_AND_ALL })
-  console.log(terms)
   const remove = async () => {
     try {
       await mutate(client, {
