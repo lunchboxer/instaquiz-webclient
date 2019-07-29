@@ -39,14 +39,6 @@
   }
 </style>
 
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#/Terms">Terms</a></li>
-    <li><a href="#/Courses">Courses</a></li>
-  </ul>
-</nav>
-
 <h1 class="title is-3">{course.name}</h1>
 <p class="subtitle">{term.name}</p>
 

@@ -7,7 +7,6 @@
   import CourseDetails from './CourseDetails.svelte'
 
   export let params = {}
-  $: console.log(params)
 
   const courseCache = query(client, {
     query: COURSE,
@@ -18,6 +17,14 @@
 <svelte:head>
   <title>Course Details</title>
 </svelte:head>
+
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="#/Terms">Terms</a></li>
+    <li><a href="#/Courses">Courses</a></li>
+  </ul>
+</nav>
 
 {#await $courseCache}
   <h1 class="title is-3">Course Details</h1>

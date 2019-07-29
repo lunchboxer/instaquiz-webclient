@@ -9,7 +9,14 @@
   <title>Terms</title>
 </svelte:head>
 
-<h1 class="title is-3">Terms</h1>
+<nav class="breadcrumb" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li class="is-active"><a href="#/Terms" aria-current="page">Terms</a></li>
+  </ul>
+</nav>
+
+<h1 class="title is-3">All Terms</h1>
 
 {#if $auth.role === 'Teacher'}
   <CreateTerm />
