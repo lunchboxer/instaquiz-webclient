@@ -1,7 +1,11 @@
-<script>
+<script context="module">
   import { TERMS_AND_ALL } from '../../data/queries'
   import { query } from 'svelte-apollo'
   import { client } from '../../data/apollo'
+
+  export const terms = query(client, { query: TERMS_AND_ALL })
+</script>
+<script>
   import { auth } from '../../data/auth'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
@@ -9,8 +13,6 @@
   import CourseList from './CourseList.svelte'
   import CreateTerm from '../terms/CreateTerm.svelte'
   import UpcomingSessions from './UpcomingSessions.svelte'
-
-  const terms = query(client, { query: TERMS_AND_ALL })
 
   const now = new Date().toJSON()
 
@@ -39,7 +41,7 @@
 {#await $terms}
   <Loading what="terms and courses" />
 {:then result}
-
+  {#if result && result.data && result.data.terms}
   {#if !getCurrent(result.data.terms)}
 
     <p>There is no term currently in session.</p>
@@ -82,7 +84,7 @@
     {#if $auth.role === 'Student'}
       <a href="#/join-course" class="button">Join a course</a>
     {/if}
-  
+  {/if}
   {:catch errors}
     <Error {errors} />
   {/await}

@@ -41,6 +41,13 @@ mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
 }
 ${CourseFields}`
 
+export const DELETE_COURSE = gql`
+mutation DeleteCourse($id: ID!) {
+  deleteCourse(id: $id){ 
+    id
+  }
+}`
+
 export const ADD_STUDENT_TO_COURSE = gql`
 mutation ($id: ID!, $code: String!){
   addStudentToCourse(id: $id, code: $code ) {

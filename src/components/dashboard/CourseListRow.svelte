@@ -10,7 +10,6 @@
   li {
     list-style: none;
     margin: 0.5rem;
-    padding: 0.5rem;
   }
 
   li:hover {
@@ -19,6 +18,7 @@
 
   .item-header {
     cursor: pointer;
+    padding: 0.5rem;
   }
 </style>
 

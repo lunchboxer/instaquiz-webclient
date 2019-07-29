@@ -4,6 +4,7 @@
   import { client } from '../../data/apollo'
   import AddTeacherToCourse from '../courses/AddTeacherToCourse.svelte'
   import RemoveTeacherFromCourse from '../courses/RemoveTeacherFromCourse.svelte'
+  import DeleteCourse from '../courses/DeleteCourse.svelte'
   import DL from '../DL.svelte'
   import { COURSE_SESSIONS } from '../../data/queries'
   import Error from '../Error.svelte'
@@ -24,8 +25,8 @@
 </script>
 
 <style>
-  .item-header {
-    padding: 0.5rem;
+  .item-details {
+    padding: 0.5rem 1rem 1rem 1rem;
   }
 
   .buttons {
@@ -33,7 +34,7 @@
   }
 </style>
 
-<div class="item-header">
+<div class="item-details">
 
   <DL>
     <dt>Teacher(s):</dt>
@@ -65,6 +66,7 @@
       {:else}
         <RemoveTeacherFromCourse user={$auth.id} {course} />
       {/if}
+        <DeleteCourse {course} />
     {/if}
   </div>
   
