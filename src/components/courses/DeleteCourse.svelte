@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from 'svelte'
   import { mutate } from 'svelte-apollo'
   import { client } from '../../data/apollo'
   import { DELETE_COURSE } from '../../data/mutations'
@@ -6,6 +7,8 @@
 
   export let course
   const loading = false
+
+  const dispatch = createEventDispatcher()
 
   const remove = async () => {
     try {
@@ -23,6 +26,7 @@
           cache.writeQuery({ query: TERMS_AND_ALL, data })
         }
       })
+      dispatch('delete')
     } catch (error) {
     }
   }

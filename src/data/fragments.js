@@ -21,7 +21,9 @@ export const SessionFields = gql`
     id
     startsAt
     endsAt
+    order
     course {
+      name
       id
     }
   }`

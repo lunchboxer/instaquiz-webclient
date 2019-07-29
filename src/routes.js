@@ -6,6 +6,7 @@ import Profile from './components/profile/Profile.svelte'
 import Test from './components/test/Test.svelte'
 import Terms from './components/terms/Terms.svelte'
 import Course from './components/courses/Course.svelte'
+import Session from './components/sessions/Session.svelte'
 
 export default {
   '/': Dashboard,
@@ -15,5 +16,6 @@ export default {
   '/test': Test,
   '/terms': Terms,
   '/course/:id': Course,
+  '/session/:id': Session,
   '*': NotFound
 }

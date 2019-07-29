@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields } from './fragments'
+import { CourseFields, SessionFields } from './fragments'
 
 // Auth
 
@@ -87,3 +87,13 @@ export const CREATE_TERM = gql`
     }
   }
 `
+
+// Sessions
+
+export const CREATE_SESSION = gql`
+mutation CreateSession($startsAt: DateTime!, $endsAt:DateTime!, $courseId:ID!) {
+  createSession(startsAt:$startsAt, endsAt:$endsAt, courseId:$courseId) {
+    ...SessionFields
+  }
+}
+${SessionFields}`

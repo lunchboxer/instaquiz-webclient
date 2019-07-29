@@ -9,6 +9,11 @@
   $: notAttending = courses.filter(c => !c.students.find(s => s.id === $auth.id))
 </script>
 
+<style>
+  h2.title {
+    margin: 2rem 0 1rem;
+  }
+</style>
 {#if courses.length > 0}
 
   {#if teaching && teaching.length}

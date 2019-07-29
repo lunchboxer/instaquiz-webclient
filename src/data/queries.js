@@ -20,15 +20,31 @@ export const ME = gql`
 }`
 
 export const GET_MY_SESSIONS = gql`
-query GetMYSessions($id: ID!, $now: DateTime!){
+query GetMYSessions($id: ID!, $now: DateTime!, $latest: DateTime!){
   sessions( orderBy: startsAt_ASC, where: { AND: [ 
     { OR: [
       { course: { teachers_some: { id: $id } }},
       { course: { students_some: { id: $id } }}
     ]},
-    { endsAt_gte: $now }
+    { endsAt_gte: $now, endsAt_lt: $latest }
   ]}){
     ...SessionFields
+  }
+}
+${SessionFields}`
+
+export const SESSION = gql`
+query Session($id: ID!){
+  session(id: $id){
+    ...SessionFields
+    prompts {
+      id
+      text
+      answers{
+        id
+        text
+      }
+    }
   }
 }
 ${SessionFields}`
@@ -67,7 +83,7 @@ export const COURSE = gql`
   query Course($id: ID!){
     course(id: $id){
       ...CourseFields
-      sessions {
+      sessions(orderBy: startsAt_DESC) {
         ...SessionFields
       }
     }
