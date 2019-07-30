@@ -25,6 +25,9 @@
     {#await $terms}
       <option>Loading...</option>
     {:then result}
+      {#if !termId}
+      <option>-- Select a term --</option>
+      {/if}
       {#each result.data.terms as term (term.id)}
       <option value={term.id} selected={term.id === termId}>{term.name}</option>
       {/each}

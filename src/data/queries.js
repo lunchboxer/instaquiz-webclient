@@ -94,3 +94,23 @@ export const COURSE = gql`
   }
   ${SessionFields}
   ${CourseFields}`
+
+export const COURSES = gql`
+query Courses {
+  courses{
+    id
+    name
+    term {
+      name
+      id
+      startDate
+    }
+    teachers {
+      id
+      name
+    }
+    students {
+      id
+    }
+  }
+}`

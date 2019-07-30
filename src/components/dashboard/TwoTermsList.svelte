@@ -1,7 +1,7 @@
 <script>
   import { auth } from '../../data/auth'
   import AddCourse from '../courses/AddCourse.svelte'
-  import CourseList from '../courses/CourseList.svelte'
+  import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
   import CreateTerm from '../terms/CreateTerm.svelte'
 
   export let terms
@@ -26,7 +26,7 @@
 
     {#if currentTerm.courses}
       <h2 class="title is-4">Current term: {currentTerm.name} </h2>
-      <CourseList courses={currentTerm.courses} />
+      <CategorizedCourseList courses={currentTerm.courses} />
       {#if $auth.role === 'Teacher'}
         <AddCourse termId={currentTerm.id} />
       {/if}
@@ -47,7 +47,7 @@
     <section class="term">
       {#if nextTerm.courses}
         <h2 class="title is-4">Next term: {nextTerm.name}</h2>
-        <CourseList courses={nextTerm.courses} />
+        <CategorizedCourseList courses={nextTerm.courses} />
         <AddCourse termId={nextTerm.id} />
       {/if} <!-- nextTerm.courses -->
     </section>
