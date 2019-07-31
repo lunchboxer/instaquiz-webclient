@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields, QuestionFields } from './fragments'
+import { CourseFields, SessionFields } from './fragments'
 
 export const ME = gql`
 {

@@ -1,15 +1,11 @@
 <script>
-  // import ApolloClient from 'apollo-client'
-  import { client } from './data/apollo'
-  import { setClient } from 'svelte-apollo'
   import { NotificationList } from './components/notifications'
   import { auth } from './data/auth'
   import Router, { location } from 'svelte-spa-router'
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-
-  setClient(client)
+  import UpcomingSessions from './components/sessions/UpcomingSessions.svelte'
 </script>
 
 <style>
@@ -25,6 +21,7 @@
 <main>
 
   {#if $auth.username || $location === '/signup'}
+    <UpcomingSessions />
     <Router {routes} />
   {:else}
     <Login/>
