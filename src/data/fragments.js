@@ -27,3 +27,17 @@ export const SessionFields = gql`
       id
     }
   }`
+
+export const QuestionFields = gql`
+  fragment QuestionFields on Question {
+    id
+    text
+    order
+    answers {
+      id
+      text
+    }
+    session {
+      id
+    }
+  }`

@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields } from './fragments'
 
 export const ME = gql`
 {
@@ -36,18 +36,25 @@ ${SessionFields}`
 export const SESSION = gql`
 query Session($id: ID!){
   session(id: $id){
-    ...SessionFields
-    prompts {
+    id
+    startsAt
+    endsAt
+    order
+    course {
       id
-      text
-      answers{
+      name
+      term {
         id
-        text
+        name
       }
     }
+    questions {
+      id
+      text
+      order
+    }
   }
-}
-${SessionFields}`
+}`
 
 export const TERMS_AND_ALL = gql`
 {
@@ -111,6 +118,38 @@ query Courses {
     }
     students {
       id
+    }
+  }
+}`
+
+export const QUESTION = gql`
+query Question($id: ID!){
+  question(id: $id){
+    id
+    text
+    order
+    answers {
+      id
+      text
+      responses {
+        id
+        student {
+          id
+        }
+        createdAt
+      }
+    }
+    session {
+      id
+      order
+      course {
+        id
+        name
+        term {
+          id
+          name
+        }
+      }
     }
   }
 }`

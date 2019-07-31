@@ -18,22 +18,19 @@
   <title>Session Details</title>
 </svelte:head>
 
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#/terms">Terms</a></li>
-    <li><a href="#/courses">Courses</a></li>
-    <li><a href="#/sessions">Sessions</a></li>
-  </ul>
-</nav>
-
 {#await $sessionCache}
-    <h1 class="title is-3">Session Details</h1>
-    <Loading what="session"/>
-  {:then result}
-    {#if result && result.data && result.data.session}
-      <SessionDetails session={result.data.session} />
-    {/if}
-  {:catch errors}
-    <Error {errors} />
-  {/await}
+  <Loading what="session"/>
+{:then result}
+  {#if result && result.data && result.data.session}
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="#/terms">Terms</a></li>
+        <li><a href="#/term/{result.data.session.course.term.id}">{result.data.session.course.term.name}</a></li>
+        <li><a href="#/course/{result.data.session.course.id}">{result.data.session.course.name}</a></li>
+      </ul>
+    </nav>
+    <SessionDetails session={result.data.session} />
+  {/if}
+{:catch errors}
+  <Error {errors} />
+{/await}

@@ -20,7 +20,9 @@ const authLink = setContext((_, { headers }) => {
   }
 })
 
-const cache = new InMemoryCache()
+const cache = new InMemoryCache({
+  dataIdFromObject: object => object.id
+})
 
 let errorsLink
 

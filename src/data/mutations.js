@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields } from './fragments'
 
 // Auth
 
@@ -34,43 +34,48 @@ export const SIGNUP = gql`
 // Courses
 
 export const CREATE_COURSE = gql`
-mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
-  createCourse(name:$name, code: $code, termId: $termId){ 
-    ...CourseFields
+  mutation CreateCourse($name: String!, $code: String!, $termId: ID!) {
+    createCourse(name:$name, code: $code, termId: $termId){ 
+      ...CourseFields
+    }
   }
-}
-${CourseFields}`
+  ${CourseFields}
+`
 
 export const DELETE_COURSE = gql`
-mutation DeleteCourse($id: ID!) {
-  deleteCourse(id: $id){ 
-    id
+  mutation DeleteCourse($id: ID!) {
+    deleteCourse(id: $id){ 
+      id
+    }
   }
-}`
+`
 
 export const ADD_STUDENT_TO_COURSE = gql`
-mutation ($id: ID!, $code: String!){
-  addStudentToCourse(id: $id, code: $code ) {
-    ...CourseFields
+  mutation ($id: ID!, $code: String!){
+    addStudentToCourse(id: $id, code: $code ) {
+      ...CourseFields
+    }
   }
-}
-${CourseFields}`
+  ${CourseFields}
+`
 
 export const ADD_TEACHER_TO_COURSE = gql`
-mutation ($id: ID!, $courseId: ID!){
-  addTeacherToCourse(id: $id, courseId: $courseId ) {
-    ...CourseFields
+  mutation ($id: ID!, $courseId: ID!){
+    addTeacherToCourse(id: $id, courseId: $courseId ) {
+      ...CourseFields
+    }
   }
-}
-${CourseFields}`
+  ${CourseFields}
+`
 
 export const REMOVE_TEACHER_FROM_COURSE = gql`
-mutation ($id: ID!, $courseId: ID!){
-  removeTeacherFromCourse(id: $id, courseId: $courseId ) {
-    ...CourseFields
+  mutation ($id: ID!, $courseId: ID!){
+    removeTeacherFromCourse(id: $id, courseId: $courseId ) {
+      ...CourseFields
+    }
   }
-}
-${CourseFields}`
+  ${CourseFields}
+`
 
 // Terms
 
@@ -91,9 +96,48 @@ export const CREATE_TERM = gql`
 // Sessions
 
 export const CREATE_SESSION = gql`
-mutation CreateSession($startsAt: DateTime!, $endsAt:DateTime!, $courseId:ID!) {
-  createSession(startsAt:$startsAt, endsAt:$endsAt, courseId:$courseId) {
-    ...SessionFields
+  mutation CreateSession($startsAt: DateTime!, $endsAt:DateTime!, $courseId:ID!) {
+    createSession(startsAt:$startsAt, endsAt:$endsAt, courseId:$courseId) {
+      ...SessionFields
+    }
   }
-}
-${SessionFields}`
+  ${SessionFields}
+`
+
+// Question
+
+export const CREATE_QUESTION = gql`
+  mutation CreateQuestion($text: String!, $sessionId: ID!, $order: Int){
+    createQuestion(text: $text, sessionId: $sessionId, order: $order) {
+      ...QuestionFields
+    }
+  }
+  ${QuestionFields}
+`
+
+export const DELETE_QUESTION = gql`
+  mutation deleteQuestion($id: ID!){
+    deleteQuestion(id: $id) {
+      id
+    }
+  }
+`
+
+//  Answer
+
+export const CREATE_ANSWER = gql`
+  mutation createAnswer($text: String!, $questionId: ID!){
+    createAnswer(text: $text, questionId: $questionId) {
+      id
+      text
+    }
+  }
+`
+
+export const DELETE_ANSWER = gql`
+  mutation deleteAnswer($id: ID!){
+    deleteAnswer(id: $id) {
+      id
+    }
+  }
+`

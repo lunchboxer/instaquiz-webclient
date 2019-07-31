@@ -24,7 +24,6 @@
             return courseIndex > -1
           })
           data.terms[termIndex].courses.splice(courseIndex, 1)
-          console.log(data)
           cache.writeQuery({ query: TERMS_AND_ALL, data })
         }
       })

@@ -28,7 +28,8 @@
         //   const data = cache.readQuery({ query: TERMS_AND_ALL })
         //   const index = data.terms.findIndex(t => t.id === createCourse.term.id)
         //   data.terms[index].courses.push({ ...createCourse, __typename: 'Course' })
-        //   cache.writeQuery({ query: TERMS_AND_ALL, data })
+        //   console.log(data.terms[index].courses)
+        //   client.writeQuery({ query: TERMS_AND_ALL, data })
         // }
       })
       // const { terms } = client.readQuery({ query: TERMS_AND_ALL })

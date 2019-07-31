@@ -56,7 +56,8 @@
         on:invalid|preventDefault="{checkValidity}"
         {placeholder}
       />
-      {/if} {#if type === 'password'}
+      {/if} 
+      {#if type === 'password'}
       <input
         bind:this="{input}"
         {name}
@@ -73,7 +74,8 @@
         on:invalid|preventDefault="{checkValidity}"
         {placeholder}
       />
-      {/if} {#if type === 'date'}
+      {/if} 
+      {#if type === 'date'}
       <input
         bind:this="{input}"
         {name}
@@ -83,12 +85,14 @@
         type="date"
         pattern="^[0-9]{4}-(1[0-2]|0[1-9])-([1-3][0-9]|0[1-9])$"
         {required}
+        {min}
         {max}
         aria-describedby="{descriptionId}"
         on:input="{checkValidity}"
         on:invalid|preventDefault="{checkValidity}"
       />
-      {/if} {#if type === 'datetime-local'}
+      {/if} 
+      {#if type === 'datetime-local'}
       <input
         bind:this="{input}"
         {name}
@@ -97,12 +101,30 @@
         class:error="{error}"
         type="datetime-local"
         {required}
+        {min}
         {max}
         aria-describedby="{descriptionId}"
         on:input="{checkValidity}"
         on:invalid|preventDefault="{checkValidity}"
       />
-      {/if} {#if leftIcon}
+      {/if} 
+      {#if type === 'number'}
+      <input
+        bind:this="{input}"
+        {name}
+        class="input"
+        bind:value
+        class:error="{error}"
+        type="number"
+        {required}
+        {max}
+        {min}
+        aria-describedby="{descriptionId}"
+        on:input="{checkValidity}"
+        on:invalid|preventDefault="{checkValidity}"
+      />
+      {/if}
+      {#if leftIcon}
       <span class="icon is-small is-left">
         <i class="fas fa-{leftIcon}"></i>
       </span>
