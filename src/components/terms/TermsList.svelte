@@ -16,7 +16,7 @@
     if (nextTerm && t.id === nextTerm.id) return false
     return true
   })
-  $: console.log(otherTerms)
+  $: console.log($auth)
 </script>
 
 <style>

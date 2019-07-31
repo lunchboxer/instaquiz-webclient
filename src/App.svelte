@@ -11,9 +11,10 @@
   import AddStudentToCourse from './components/courses/AddStudentToCourse.svelte'
   import Profile from './components/profile/Profile.svelte'
   import Terms from './components/terms/Terms.svelte'
+  import Term from './components/terms/Term.svelte'
+  import Courses from './components/courses/Courses.svelte'
   import Course from './components/courses/Course.svelte'
   import Session from './components/sessions/Session.svelte'
-  import Courses from './components/courses/Courses.svelte'
   import Question from './components/questions/Question.svelte'
 
   export let url = ''
@@ -46,6 +47,7 @@
       <Route path="/session/:id" component={Session} />
       <Route path="/question/:id" component={Question} />
       <Route path="/terms" component={Terms} />
+      <Route path="/term/:id" component={Term} />
       <Route path="/me" component={Profile}/>
       <Route path="/" component={Dashboard}/>
       <Route path="*"><NotFound /></Route>

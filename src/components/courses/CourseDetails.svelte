@@ -76,20 +76,18 @@
 </svelte:head>
 
 <h1 class="title is-3">{course.name}</h1>
-<p class="subtitle">{course.term.name}</p>
-
-{#if $auth.role === 'Teacher'}
-  <p class="registration">
-    <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
-  {#if !isCourseTeacher}
-    <AddTeacherToCourse user={$auth.id} {course} />
+<p class="subtitle">
+  {#if $auth.role === 'Teacher'}>
+      <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
+    {#if !isCourseTeacher}
+      <AddTeacherToCourse user={$auth.id} {course} />
+    {:else}
+      <RemoveTeacherFromCourse user={$auth.id} {course} />
+    {/if}
   {:else}
-    <RemoveTeacherFromCourse user={$auth.id} {course} />
+    You are{!isEnrolled ? "n't" : ''} enrolled in this class.
   {/if}
-  </p>
-{:else}
-  <p>You are{!isEnrolled ? "n't" : ''} enrolled in this class.</p>
-{/if}
+</p>
 
 
 <div class="course-details">
@@ -103,21 +101,21 @@
   </dl>
 
   {#if course.sessions && course.sessions.length > 0}
-    <div class="sessions">
-      <h3 class="title is-5">Current and future sessions</h3>
-      {#if future.length > 0}
-        {#each future as session (session.id)}
-          <li>
-            <a href="/session/{session.id}" use:link>
-              {session.order}. {formatDate(session.startsAt)}
-            </a>
-          </li>
-        {/each}
-      {/if}
-      {#if $auth.role === 'Teacher'}
+    {#if $auth.role === 'Teacher'}
+      <div class="sessions">
+        <h3 class="title is-5">Current and future sessions</h3>
+        {#if future.length > 0}
+          {#each future as session (session.id)}
+            <li>
+              <a href="/session/{session.id}" use:link>
+                {session.order}. {formatDate(session.startsAt)}
+              </a>
+            </li>
+          {/each}
+        {/if}
         <AddSession courseId={course.id} />
-      {/if}
-    </div>
+      </div>
+    {/if}
     
     {#if past.length > 0}
       <div class="sessions">

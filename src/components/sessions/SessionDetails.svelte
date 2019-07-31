@@ -2,6 +2,7 @@
   import { formatRelative } from 'date-fns'
   import CreateQuestion from '../questions/CreateQuestion.svelte'
   import { link } from 'svelte-routing'
+  import { auth } from '../../data/auth'
 
   export let session
 
@@ -28,7 +29,9 @@
 
 <h2 class="title is-4">{session.questions.length} Questions</h2>
 
-<CreateQuestion sessionId={session.id} />
+{#if $auth.role === 'Teacher'}
+  <CreateQuestion sessionId={session.id} />
+{/if}
 
 <section class="question-list">
   {#if session.questions && session.questions.length > 0}

@@ -70,6 +70,20 @@ export const TERMS_AND_ALL = gql`
 }
 ${CourseFields}`
 
+export const TERM = gql`
+query Term($id: ID!){
+  term(id:$id) {
+    id
+    startDate
+    endDate
+    name
+    courses {
+      ...CourseFields
+    }
+  }
+}
+${CourseFields}`
+
 export const TERMS = gql`
 {
   terms(orderBy: startDate_ASC) {
