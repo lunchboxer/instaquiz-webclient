@@ -31,4 +31,5 @@
   }
 </style>
 
-<button class="button" class:is-loading={loading} on:click={joinCourse}><i class="fas fa-user-plus"></i>Join</button>
+<button class="button is-small" class:is-loading={loading} on:click={joinCourse}><i
+    class="fas fa-user-plus"></i>Join</button>

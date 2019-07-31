@@ -25,14 +25,8 @@
 </script>
 
 <style>
-  .registration {
-    display: inline-flex;
-    align-items: baseline;
-    margin-bottom: 1rem;
-  }
-
-  .registration span {
-    margin-right: 1rem;
+  .subtitle span {
+    margin-right: 0.5rem;
   }
 
   .course-details {
@@ -77,7 +71,7 @@
 
 <h1 class="title is-3">{course.name}</h1>
 <p class="subtitle">
-  {#if $auth.role === 'Teacher'}>
+  {#if $auth.role === 'Teacher'}
       <span>You are{!isCourseTeacher ? "n't" : ''} a teacher for this class.</span>
     {#if !isCourseTeacher}
       <AddTeacherToCourse user={$auth.id} {course} />

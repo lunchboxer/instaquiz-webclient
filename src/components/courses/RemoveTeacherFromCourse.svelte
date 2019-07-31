@@ -29,5 +29,5 @@
   }
 </script>
 
-<button class="button" class:is-loading={loading} on:click={leaveCourse}>Leave</button>
+<button class="button is-small" class:is-loading={loading} on:click={leaveCourse}>Leave</button>
 <Error {errors} />
