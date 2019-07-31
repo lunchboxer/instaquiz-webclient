@@ -3,6 +3,7 @@
   import AddCourse from '../courses/AddCourse.svelte'
   import CategorizedCourseList from '../courses/CategorizedCourseList.svelte'
   import CreateTerm from './CreateTerm.svelte'
+  import { link } from 'svelte-routing'
 
   export let terms
 
@@ -72,5 +73,5 @@
 {/if} <!-- $auth.role === 'Teacher -->
 
 {#if $auth.role === 'Student'}
-  <a href="#/join-course" class="button">Join a course</a>
+  <a href="/join-course" class="button" use:link>Join a course</a>
 {/if}

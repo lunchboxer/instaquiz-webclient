@@ -5,8 +5,7 @@
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import CourseList from './CourseList.svelte'
-
-  export let params = {}
+  import { link } from 'svelte-routing'
 
   const coursesCache = query(client, {
     query: COURSES
@@ -19,8 +18,8 @@
 
 <nav class="breadcrumb" aria-label="breadcrumbs">
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#/Terms">Terms</a></li>
+    <li><a href="/" use:link>Home</a></li>
+    <li><a href="/Terms" use:link>Terms</a></li>
   </ul>
 </nav>
 

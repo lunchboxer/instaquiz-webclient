@@ -46,6 +46,6 @@
     "sirv-cli": "^0.4.4",
     "subscriptions-transport-ws": "^0.9.16",
     "svelte-apollo": "^0.3.0",
-    "svelte-spa-router": "^1.1.3"
+    "svelte-routing": "^1.2.1"
   }
 }

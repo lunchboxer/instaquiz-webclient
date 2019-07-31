@@ -1,5 +1,5 @@
 <script>
-  import { push } from 'svelte-spa-router'
+  import { navigate } from 'svelte-routing'
   import { mutate } from 'svelte-apollo'
   import { notifications } from '../notifications'
   import { auth } from '../../data/auth'
@@ -32,7 +32,7 @@
       })
       errors = ''
       notifications.add({ text: `Student ${$auth.name} added to ${response.data.addStudentToCourse.name}`, type: 'success' })
-      push('/')
+      navigate('/')
     } catch (error) {
       errors = error
       notifications.add({ text: 'registration failed.', type: 'danger' })
