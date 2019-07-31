@@ -4,8 +4,10 @@
   import { DELETE_QUESTION } from '../../data/mutations'
   import { SESSION } from '../../data/queries'
   import { notifications } from '../notifications'
+  import { navigate } from 'svelte-routing'
 
   export let id
+  export let next = null
   export let sessionId
 
   const remove = async () => {
@@ -16,6 +18,7 @@
         refetchQueries: [{ query: SESSION, variables: { id: sessionId } }]
       })
       notifications.add({ text: `Deleted question`, type: 'success' })
+      navigate(next || `/session/${sessionId}`)
     } catch (error) {
       notifications.add({
         text: 'Could not delete question.',
