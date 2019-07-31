@@ -4,11 +4,9 @@
 
 <style>
   .warning {
-    max-width: 768px;
     border: 1px solid #ffdd57;
     color: #ffdd57;
     margin-bottom: 1rem;
-    border-radius: 4px;
   }
 
   .warning :global(strong) {

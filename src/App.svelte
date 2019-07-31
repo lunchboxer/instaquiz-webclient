@@ -1,15 +1,23 @@
 <script>
-  // import ApolloClient from 'apollo-client'
-  import { client } from './data/apollo'
-  import { setClient } from 'svelte-apollo'
   import { NotificationList } from './components/notifications'
   import { auth } from './data/auth'
-  import Router, { location } from 'svelte-spa-router'
-  import routes from './routes'
+  import { Router, Route } from 'svelte-routing'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
+  import UpcomingSessions from './components/sessions/UpcomingSessions.svelte'
+  import Signup from './components/Signup.svelte'
+  import Dashboard from './components/dashboard/Dashboard.svelte'
+  import NotFound from './components/NotFound.svelte'
+  import AddStudentToCourse from './components/courses/AddStudentToCourse.svelte'
+  import Profile from './components/profile/Profile.svelte'
+  import Test from './components/test/Test.svelte'
+  import Terms from './components/terms/Terms.svelte'
+  import Course from './components/courses/Course.svelte'
+  import Session from './components/sessions/Session.svelte'
+  import Courses from './components/courses/Courses.svelte'
+  import Question from './components/questions/Question.svelte'
 
-  setClient(client)
+  export let url = ''
 </script>
 
 <style>
@@ -22,10 +30,27 @@
 
 <Navbar />
 
+
 <main>
 
-  {#if $auth.username || $location === '/signup'}
-    <Router {routes} />
+  {#if $auth.username}
+    <UpcomingSessions />
+  {/if}
+
+  {#if $auth.username || url === '/signup'}
+ 
+    <Router {url}>
+      <Route path="/join-course" component={AddStudentToCourse} />
+      <Route path="/signup" component={Signup} />
+      <Route path="/course/:id" component={Course} />
+      <Route path="/courses" component={Courses}/>
+      <Route path="/session/:id" component={Session} />
+      <Route path="/question/:id" component={Question} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/me" component={Profile}/>
+      <Route path="/" component={Dashboard}/>
+      <Route path="*"><NotFound /></Route>
+    </Router>
   {:else}
     <Login/>
   {/if}

@@ -6,6 +6,7 @@
   import { auth } from '../../data/auth'
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
+  import Warning from '../Warning.svelte'
 
   const hours = 24
 
@@ -27,12 +28,13 @@
   <Loading what="Your upcoming sessions"/>
 {:then result}
   {#if result.data.sessions.length > 0}
+  <Warning title="{result.data.sessions.length} classes in the next {hours} hours">
     <div class="upcoming-sessions">
-        <p>You have {result.data.sessions.length} class sessions in the next {hours} hours:</p>
-        {#each result.data.sessions as session (session.id) }
-          <li>{session.course.name} - {formatDate(session.startsAt)}</li>
-        {/each}
+      {#each result.data.sessions as session (session.id) }
+        <li>{session.course.name} - {formatDate(session.startsAt)}</li>
+      {/each}
     </div>
+  </Warning>
   {/if}
 {:catch errors}
   <Error {errors}/>

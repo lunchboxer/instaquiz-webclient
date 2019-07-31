@@ -3,6 +3,7 @@
   import { notifications } from './notifications'
   import Input from './Input.svelte'
   import Error from './Error.svelte'
+  import { link } from 'svelte-routing'
 
   let username = ''
   let password = ''
@@ -96,7 +97,7 @@
             Let me in!
           </button>
           <p>or</p>
-          <a href="#/signup" class="button">Create account</a>
+          <a href="/signup" class="button" use:link>Create account</a>
         </div>
       </div>
     </form>

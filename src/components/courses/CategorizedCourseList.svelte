@@ -1,5 +1,6 @@
 <script>
   import { auth } from '../../data/auth'
+  import { link } from 'svelte-routing'
 
   export let courses = []
 
@@ -19,28 +20,28 @@
   {#if teaching && teaching.length}
     <h2 class="title is-5">Teaching</h2>
     {#each teaching as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li><a href="/course/{course.id}" use:link>{course.name}</a></li>
     {/each}
   {/if}
 
   {#if attending && attending.length}
     <h2 class="title is-5">Attending</h2>
     {#each attending as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li><a href="/course/{course.id}" use:link>{course.name}</a></li>
     {/each}
   {/if}
 
   {#if $auth.role === 'Teacher' && notTeaching.length > 0}
     <h2 class="title is-5">Not teaching</h2>
     {#each notTeaching as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li><a href="/course/{course.id}" use:link>{course.name}</a></li>
     {/each}
   {/if}
 
   {#if $auth.role === 'Student' && notAttending.length > 0}
     <h2 class="title is-5">Not attending</h2>
     {#each notAttending as course (course.id)}
-      <li><a href="#/course/{course.id}">{course.name}</a></li>
+      <li><a href="/course/{course.id}" use:link>{course.name}</a></li>
     {/each}
   {/if}
 

@@ -1,11 +1,11 @@
 <script>
   import { formatRelative } from 'date-fns'
-  import { pop } from 'svelte-spa-router'
   import { auth } from '../../data/auth'
   import AddTeacherToCourse from './AddTeacherToCourse.svelte'
   import RemoveTeacherFromCourse from './RemoveTeacherFromCourse.svelte'
   import DeleteCourse from './DeleteCourse.svelte'
   import AddSession from '../sessions/AddSession.svelte'
+  import { link, navigate } from 'svelte-routing'
 
   export let course
 
@@ -108,7 +108,7 @@
       {#if future.length > 0}
         {#each future as session (session.id)}
           <li>
-            <a href="#/session/{session.id}">
+            <a href="/session/{session.id}" use:link>
               {session.order}. {formatDate(session.startsAt)}
             </a>
           </li>
@@ -124,7 +124,7 @@
         <h3 class="title is-5">Past sessions</h3>
         {#each past as session (session.id)}
           <li>
-            <a href="#/session/{session.id}">
+            <a href="/session/{session.id}" use:link>
               {session.order}. {formatDate(session.startsAt)}
             </a>
           </li>
@@ -137,7 +137,7 @@
     {#if $auth.role === 'Teacher'}
         <!-- Can't be deleted if it has session connection -->
       {#if !course.sessions || course.sessions.length === 0}
-        <DeleteCourse {course} on:delete={pop} />
+        <DeleteCourse {course} on:delete={() => navigate('/')} />
       {/if}
    
     {/if}

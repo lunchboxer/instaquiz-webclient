@@ -5,7 +5,6 @@
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import AddCourse from '../courses/AddCourse.svelte'
-  import UpcomingSessions from '../dashboard/UpcomingSessions.svelte'
   import DeleteCourse from '../courses/DeleteCourse.svelte'
 
   const terms = query(client, { query: TERMS_AND_ALL })
@@ -23,8 +22,6 @@
 </svelte:head>
 
 <h1 class="title is-3">Dashboard</h1>
-
-<UpcomingSessions />
 
 {#await $terms}
   <Loading what="terms and courses" />

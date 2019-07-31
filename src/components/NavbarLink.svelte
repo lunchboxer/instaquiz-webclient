@@ -1,6 +1,5 @@
 <script>
-  import active from 'svelte-spa-router/active'
-  import { link } from 'svelte-spa-router'
+  import { link } from 'svelte-routing'
 
   export let url = ''
   export let text = ''
@@ -23,7 +22,7 @@
   }
 </style>
 
-<a class="navbar-item" href="{url}" use:link use:active>
+<a class="navbar-item" href="{url}" use:link>
   {#if icon}
   <i class="fas fa-{icon}"></i>
   {/if} {text}
