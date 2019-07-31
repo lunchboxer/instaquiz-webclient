@@ -18,20 +18,18 @@
   <title>Course Details</title>
 </svelte:head>
 
-<nav class="breadcrumb" aria-label="breadcrumbs">
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#/Terms">Terms</a></li>
-    <li><a href="#/Courses">Courses</a></li>
-  </ul>
-</nav>
-
 {#await $courseCache}
-  <h1 class="title is-3">Course Details</h1>
   <Loading what="course"/>
 {:then result}
   {#if result && result.data && result.data.course}
-    <CourseDetails course={result.data.course} terms={result.data.terms} />
+  <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="#/terms">Terms</a></li>
+        <li><a href="#/term/{result.data.course.term.id}">{result.data.course.term.name}</a></li>
+      </ul>
+    </nav>
+  
+    <CourseDetails course={result.data.course} />
   {/if}
 {:catch errors}
   <Error {errors} />

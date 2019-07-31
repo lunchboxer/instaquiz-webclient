@@ -8,7 +8,6 @@
   import AddSession from '../sessions/AddSession.svelte'
 
   export let course
-  export let terms
 
   $: isCourseTeacher = course.teachers.find(t => t.id === $auth.id)
   $: isEnrolled = course.students.find(t => t.id === $auth.id)
@@ -18,7 +17,6 @@
   const now = new Date().toJSON()
   $: past = course.sessions.filter(s => s.endsAt < now).sort((a, b) => b.startsAt.localeCompare(a.startsAt))
   $: future = course.sessions.filter(s => s.endsAt > now).sort((a, b) => a.startsAt.localeCompare(b.startsAt))
-  $: term = terms.find(t => t.id === course.term.id)
 
   const formatDate = (date) => {
     const string = formatRelative(new Date(date), new Date())
@@ -78,7 +76,7 @@
 </svelte:head>
 
 <h1 class="title is-3">{course.name}</h1>
-<p class="subtitle">{term.name}</p>
+<p class="subtitle">{course.term.name}</p>
 
 {#if $auth.role === 'Teacher'}
   <p class="registration">

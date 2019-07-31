@@ -94,10 +94,6 @@ export const COURSE = gql`
         ...SessionFields
       }
     }
-    terms {
-      id
-      name
-    }
   }
   ${SessionFields}
   ${CourseFields}`

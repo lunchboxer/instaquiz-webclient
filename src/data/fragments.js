@@ -6,6 +6,7 @@ export const CourseFields = gql`
     name
     term {
       id
+      name
     }
     teachers {
       id
