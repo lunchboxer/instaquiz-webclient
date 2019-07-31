@@ -114,7 +114,7 @@
           </li>
         {/each}
       {/if}
-      {#if $auth.role = 'Teacher'}
+      {#if $auth.role === 'Teacher'}
         <AddSession courseId={course.id} />
       {/if}
     </div>
