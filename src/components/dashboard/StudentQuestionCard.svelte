@@ -46,11 +46,6 @@
   li {
     list-style: none;
   }
-
-  .title {
-    width: 100%;
-    text-align: center;
-  }
 </style>
 
 <section class="question">

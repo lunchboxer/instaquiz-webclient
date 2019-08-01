@@ -4,8 +4,7 @@
   export let totalResponses
 
   $: percentage = responses.length === 0 || !totalResponses ? 0
-    : responses.length / totalResponses
-  $: console.log(parseInt(responses.length, 10))
+    : parseInt((responses.length / totalResponses) * 100)
 </script>
 
 <li>

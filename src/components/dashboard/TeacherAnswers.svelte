@@ -1,34 +1,46 @@
 <script>
-  import { query } from 'svelte-apollo'
+  import { onMount } from 'svelte'
   import { client } from '../../data/apollo'
-  import { RESPONSES } from '../../data/queries'
-  import Error from '../Error.svelte'
-  import Loading from '../Loading.svelte'
+  import { RESPONSES, RESPONSE_SUBSCRIPTION } from '../../data/queries'
   import TeacherAnswerRow from './TeacherAnswerRow.svelte'
 
   export let question
+  let responses = []
 
-  const responsesCache = query(client, {
-    query: RESPONSES,
-    variables: { questionId: question.id }
+  onMount(async () => {
+    const responsesResult = await client.query({
+      query: RESPONSES,
+      variables: { questionId: question.id }
+    })
+    responses = responsesResult.data.responses
+    client.subscribe({
+      query: RESPONSE_SUBSCRIPTION,
+      variables: { questionId: question.id }
+    }).subscribe({
+      next (result) {
+        responses = [...responses, result.data.responses]
+      }
+    })
   })
-
-  const filter = (answerId, responses) => responses.filter(r => r.answer.id === answerId)
 </script>
 
-{#await $responsesCache}
-  <Loading what="Answers and responses"/>
-{:then result}
-  {#if result.data.responses}
-    <p>{result.data.responses.length} responses total:</p>
-    {#each question.answers as answer (answer.id)}
+<style>
+  .answers {
+    padding: 1rem;
+  }
+
+  .answers p {
+    margin-bottom: 1rem;
+  }
+</style>
+
+<div class="answers">
+  <p>{responses.length} responses total:</p>
+  {#each question.answers as answer (answer.id)}
       <TeacherAnswerRow 
       {answer} 
-      responses={filter(answer.id, result.data.responses)}
-      totalResponses={result.data.responses.length}
+      responses={responses.filter(r => r.answer.id === answer.id)}
+      totalResponses={responses.length}
       />
     {/each}
-  {/if}
-{:catch errors}
-  <Error {errors} />
-{/await}
+</div>

@@ -1,5 +1,6 @@
 <script>
   import { notifications } from '../notifications'
+  import { formatRelative } from 'date-fns'
   import { mutate } from 'svelte-apollo'
   import { client } from '../../data/apollo'
   import { currentQuestion } from './stores'
@@ -42,10 +43,11 @@
 
   li:hover {
     background: black;
+    border: 1px solid grey;
   }
 
   li.current {
-    border: 1px solid white;
+    border: 1px solid grey;
     background: black;
     cursor: inherit;
   }
@@ -60,7 +62,7 @@
 
   .buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 </style>
 
@@ -68,14 +70,20 @@
 
   <div class="question" on:click={select}>
     {question.order + 1}. {question.text}
+    {#if !isCurrent}
+      <span class="is-pulled-right"><i class="fas fa-check"></i></span>
+    {/if}
   </div>
 
   {#if isCurrent}
     <TeacherAnswers {question} />
     <div class="buttons">
+      {#if question.asked}
+        <span>Asked {formatRelative(new Date(question.asked), new Date())}</span>
+      {/if}
       <button class:is-loading={loading} class="button is-primary" on:click={send}>
         <i class="fas fa-paper-plane"></i>
-        {asked ? 'Send again' : 'Send'}
+        {asked || question.asked ? 'Send again' : 'Send'}
       </button>
     </div>
   {/if}

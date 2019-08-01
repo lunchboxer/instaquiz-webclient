@@ -34,6 +34,7 @@ export const QuestionFields = gql`
     id
     text
     order
+    asked
     answers {
       id
       text
@@ -42,3 +43,16 @@ export const QuestionFields = gql`
       id
     }
   }`
+
+export const ResponseFields = gql`
+  fragment ResponseFields on Response {
+    id
+    createdAt
+    answer {
+      id
+    }
+    student {
+      id
+    }
+  }
+`
