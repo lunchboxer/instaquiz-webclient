@@ -19,6 +19,8 @@
 
   const save = async ({ detail }) => {
     loading = true
+    detail.startsAt = new Date(detail.startsAt).toISOString()
+    detail.endsAt = new Date(detail.endsAt).toISOString()
     const now = new Date().toJSON()
     try {
       if (detail.startsAt < now || detail.endsAt < now) {
