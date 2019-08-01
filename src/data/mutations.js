@@ -123,6 +123,14 @@ export const DELETE_QUESTION = gql`
   }
 `
 
+export const ASK_QUESTION = gql`
+  mutation AskQuestion($id: ID!){
+    askQuestion(id: $id){
+      ...QuestionFields
+    }
+  }
+  ${QuestionFields}`
+
 //  Answer
 
 export const CREATE_ANSWER = gql`

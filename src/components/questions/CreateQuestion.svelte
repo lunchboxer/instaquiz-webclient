@@ -18,7 +18,6 @@
   }
 
   const add = async ({ detail }) => {
-    console.log(detail)
     loading = true
     let order
     detail.order && (order = ((detail.order - 1)))

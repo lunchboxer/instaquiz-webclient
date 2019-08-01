@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import { CourseFields, SessionFields } from './fragments'
+import { CourseFields, SessionFields, QuestionFields } from './fragments'
 
 export const ME = gql`
 {
@@ -163,3 +163,42 @@ query Question($id: ID!){
     }
   }
 }`
+
+export const ACTIVE_TEACHER_SESSION = gql`
+  query Session($id: ID!){
+    session(id: $id){
+      id
+      questions {
+        id
+        text
+        order
+        answers {
+          id
+          text
+        }
+      }
+    }
+  }
+`
+
+export const RESPONSES = gql`
+  query Responses($questionId: ID!){
+    responses(where:{question:{id: $questionId}}){
+      id
+      createdAt
+      answer {
+        id
+      }
+      student {
+        id
+      }
+    }
+  }`
+
+export const QUESTION_SUB = gql`
+  subscription Questions($sessionId: ID!) {
+  questions(sessionId: $sessionId) {
+    ...QuestionFields
+  }
+}
+${QuestionFields}`

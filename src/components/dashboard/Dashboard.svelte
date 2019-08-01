@@ -1,8 +1,8 @@
 <script>
-  import { formatDistanceToNow } from 'date-fns'
+  import { formatDistanceStrict } from 'date-fns'
   import TermsLoader from '../terms/TermsLoader.svelte'
-  import { nowSession, imminentSession } from '../sessions/stores'
-  import ActiveSession from '../sessions/ActiveSession.svelte'
+  import { nowSession, imminentSession } from './stores'
+  import ActiveSession from './ActiveSession.svelte'
 </script>
 
 <style>
@@ -28,7 +28,7 @@
     <h2 class="title is-3">{$imminentSession.course.name}</h2> 
       <h2 class="subtitle is-5">Lesson {$imminentSession.order}</h2>
       <p>starts in...</p>
-    <p class="big">{formatDistanceToNow(new Date($imminentSession.startsAt), { includeSeconds: true })}</p>
+    <p class="big">{formatDistanceStrict(new Date($imminentSession.startsAt), new Date(), { addSuffix: true })}</p>
 </section>
   {:else}
   <TermsLoader />

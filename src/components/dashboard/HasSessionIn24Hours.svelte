@@ -58,7 +58,9 @@
 <Warning title="{todaySessions.length} classes in the next 24 hours">
   <div class="upcoming-sessions">
     {#each todaySessions as session (session.id) }
-        <li>{session.course.name} - {formatDate(session.startsAt)}.</li>
+        <li><a href="#/session/{session.id}">
+          {session.course.name} - {formatDate(session.startsAt)}.
+        </a></li>
       {/each}
     </div>
   </Warning>

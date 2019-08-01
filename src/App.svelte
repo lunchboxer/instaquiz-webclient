@@ -5,8 +5,8 @@
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
-  import { nowSession } from './components/sessions/stores'
-  import UpcomingSessions from './components/sessions/UpcomingSessions.svelte'
+  import { nowSession } from './components/dashboard/stores'
+  import UpcomingSessions from './components/dashboard/UpcomingSessions.svelte'
 </script>
 
 <style>

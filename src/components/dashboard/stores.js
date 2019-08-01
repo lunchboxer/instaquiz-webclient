@@ -6,6 +6,7 @@ export function sleep (ms) {
 
 export const nowSession = writable()
 export const imminentSession = writable()
+export const currentQuestion = writable()
 
 export const time = readable(new Date(), set => {
   const interval = setInterval(() => {
