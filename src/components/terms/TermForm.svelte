@@ -66,7 +66,7 @@
   <DatePicker bind:value={defaultDate} placeholder="Pick two dates below" className="input" {options} on:change={(event) =>
     handleChange(...event.detail)} />
   <div class="buttons">
-    <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save semester</button>
+    <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save term</button>
     <input type="reset" class="button" value="Cancel">
   </div>
 </form>

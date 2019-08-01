@@ -7,11 +7,11 @@
   import Error from '../Error.svelte'
   import TermDetails from './TermDetails.svelte'
 
-  export let id
+  export let params = {}
 
   const termCache = query(client, {
     query: TERM,
-    variables: { id }
+    variables: { id: params.id }
   })
 </script>
 

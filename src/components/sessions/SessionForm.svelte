@@ -47,7 +47,7 @@
     <Input label="Start time" type="datetime-local" bind:value={startsAt} required min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} />
     <Input label="End time" type="datetime-local" bind:value={endsAt} required min={format(new Date(), "yyyy-MM-dd'T'HH:mm")} />
     <div class="buttons">
-      <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save semester</button>
+      <button type="submit" class="button is-primary" class:is-loading={loading} bind:this={saveButton}>Save session</button>
       <input type="reset" class="button" value="Cancel">
     </div>
   </form>

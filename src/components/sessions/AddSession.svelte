@@ -1,9 +1,10 @@
 <script>
   import { mutate } from 'svelte-apollo'
+  import { auth } from '../../data/auth'
   import { client } from '../../data/apollo'
   import { notifications } from '../notifications'
   import Modal from '../Modal.svelte'
-  import { COURSE } from '../../data/queries'
+  import { COURSE, GET_MY_SESSIONS } from '../../data/queries'
   import { CREATE_SESSION } from '../../data/mutations'
   import SessionForm from './SessionForm.svelte'
 
@@ -22,6 +23,8 @@
     detail.startsAt = new Date(detail.startsAt).toISOString()
     detail.endsAt = new Date(detail.endsAt).toISOString()
     const now = new Date().toJSON()
+    const latest = new Date(new Date().getTime() + 24 * 3.6e+6).toJSON()
+    console.log(latest)
     try {
       if (detail.startsAt < now || detail.endsAt < now) {
         throw new Error('New sessions must be in the future.')
@@ -32,14 +35,16 @@
       await mutate(client, {
         mutation: CREATE_SESSION,
         variables: { ...detail, courseId },
-        refetchQueries: [{ query: COURSE, variables: { id: courseId } }]
+        refetchQueries: [
+          { query: COURSE, variables: { id: courseId } },
+          { query: GET_MY_SESSIONS, variables: { id: $auth.id, now, latest } }
+        ]
         // update: (cache, { data: { createSession } }) => {
         //   const data = cache.readQuery({ query: COURSE, variables: { id: courseId } })
         //   data.course.sessions.push(createSession)
         //   data.course.sessions.sort((a, b) => a.startsAt.localeCompare(b.startsAt))
         //   cache.writeQuery({ query: COURSE, data, variables: { id: courseId } })
         // }
-
       })
       notifications.add({ text: 'Saved new session', type: 'success' })
       reset()

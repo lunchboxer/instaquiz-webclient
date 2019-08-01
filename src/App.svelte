@@ -5,6 +5,7 @@
   import routes from './routes'
   import Login from './components/Login.svelte'
   import Navbar from './components/Navbar.svelte'
+  import { nowSession } from './components/sessions/stores'
   import UpcomingSessions from './components/sessions/UpcomingSessions.svelte'
 </script>
 
@@ -21,7 +22,7 @@
 
 <main>
 
-  {#if $auth.username}
+  {#if $auth.username && !$nowSession}
     <UpcomingSessions />
   {/if}
 

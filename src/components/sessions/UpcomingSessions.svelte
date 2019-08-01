@@ -6,7 +6,7 @@
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import HasSessionIn24Hours from './HasSessionIn24Hours.svelte'
-  import { every2Hours } from '../../data/timer'
+  import { every2Hours } from './stores'
 
   const hours = 24
 

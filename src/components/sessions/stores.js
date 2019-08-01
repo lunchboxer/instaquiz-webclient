@@ -1,8 +1,11 @@
-import { readable } from 'svelte/store'
+import { readable, writable } from 'svelte/store'
 
 export function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
+
+export const nowSession = writable()
+export const imminentSession = writable()
 
 export const time = readable(new Date(), set => {
   const interval = setInterval(() => {

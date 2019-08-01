@@ -76,7 +76,9 @@
     >
       <div class="navbar-start">
         {#if $auth.username}
-        <!-- <NavbarLink url="/" text="Dashboard" icon="chalkboard-teacher" /> -->
+        <NavbarLink url="#/" text="Dashboard" icon="chalkboard-teacher" />
+        <NavbarLink url="#/terms" text="Terms" icon="school" />
+        <NavbarLink url="#/courses" text="Courses" icon="book" />
         {/if}
       </div>
   
