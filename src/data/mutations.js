@@ -134,7 +134,7 @@ export const ASK_QUESTION = gql`
 //  Answer
 
 export const CREATE_ANSWER = gql`
-  mutation createAnswer($text: String!, $questionId: ID!){
+  mutation CreateAnswer($text: String!, $questionId: ID!){
     createAnswer(text: $text, questionId: $questionId) {
       id
       text
@@ -143,9 +143,25 @@ export const CREATE_ANSWER = gql`
 `
 
 export const DELETE_ANSWER = gql`
-  mutation deleteAnswer($id: ID!){
+  mutation DeleteAnswer($id: ID!){
     deleteAnswer(id: $id) {
       id
     }
+  }
+`
+
+export const ANSWER_QUESTION = gql`
+  mutation AnswerQuestion(
+    $studentId: ID!
+    $questionId: ID!
+    $answerId: ID!
+    $sessionId: ID!) {
+    answerQuestion(
+      studentId: $studentId
+      questionId: $questionId
+      answerId: $answerId
+      sessionId: $sessionId) {
+        id
+      }
   }
 `
