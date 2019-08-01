@@ -1,7 +1,6 @@
 <script>
   import { formatRelative } from 'date-fns'
   import CreateQuestion from '../questions/CreateQuestion.svelte'
-  import { link } from 'svelte-routing'
   import { auth } from '../../data/auth'
 
   export let session
@@ -37,7 +36,7 @@
   {#if session.questions && session.questions.length > 0}
     {#each session.questions as question (question.id)}
       <li>
-        {question.order + 1}. <a href="/question/{question.id}" use:link>{question.text}</a>
+        {question.order + 1}. <a href="#/question/{question.id}">{question.text}</a>
       </li>
     {/each}
   {/if}

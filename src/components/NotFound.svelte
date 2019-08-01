@@ -1,5 +1,5 @@
 <script>
-  import { link } from 'svelte-routing'
+  import { location, pop } from 'svelte-spa-router'
 </script>
 <style>
   .container {
@@ -25,7 +25,8 @@
     </h1>
     <h2 class="subtitle is-3">resource not found</h2>
 
-    <p>This path leads nowhere</p>
-    <p>It might be wise to return to the <a href="/" use:link>main page</a>.</p>
+    <p>The path '{$location}' leads nowhere</p>
+    <p>It might be wise to return to the <a href="#/">main page</a>.</p>
+    <button on:click={() => pop()} class="button is-link"><i class="fas fa-backward"></i>&nbsp;go back</button>
   </section>
 </div>

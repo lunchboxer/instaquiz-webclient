@@ -1,6 +1,5 @@
 <script>
   import AddCourse from './AddCourse.svelte'
-  import { link } from 'svelte-routing'
 
   export let courses = []
 
@@ -13,5 +12,5 @@
 <AddCourse />
 
 {#each sortedCourses as course (courses.id)}
-  <li><a href="/course/{course.id}" use:link>{course.name}</a> {course.term.name}</li>
+  <li><a href="#/course/{course.id}">{course.name}</a> {course.term.name}</li>
 {/each}

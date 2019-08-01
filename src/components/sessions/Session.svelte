@@ -5,13 +5,12 @@
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import SessionDetails from './SessionDetails.svelte'
-  import { link } from 'svelte-routing'
 
-  export let id
+  export let params = {}
 
   const sessionCache = query(client, {
     query: SESSION,
-    variables: { id }
+    variables: { id: params.id }
   })
 </script>
 
@@ -25,9 +24,13 @@
   {#if result && result.data && result.data.session}
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><a href="/terms" use:link>Terms</a></li>
-        <li><a href="/term/{result.data.session.course.term.id}" use:link>{result.data.session.course.term.name}</a></li>
-        <li><a href="/course/{result.data.session.course.id}" use:link>{result.data.session.course.name}</a></li>
+        <li><a href="#/terms">Terms</a></li>
+        <li><a href="#/term/{result.data.session.course.term.id}">
+          {result.data.session.course.term.name}
+        </a></li>
+        <li><a href="#/course/{result.data.session.course.id}">
+          {result.data.session.course.name}
+        </a></li>
       </ul>
     </nav>
     <SessionDetails session={result.data.session} />

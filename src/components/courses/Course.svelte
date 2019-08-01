@@ -5,13 +5,12 @@
   import Loading from '../Loading.svelte'
   import Error from '../Error.svelte'
   import CourseDetails from './CourseDetails.svelte'
-  import { link } from 'svelte-routing'
 
-  export let id
+  export let params = {}
 
   const courseCache = query(client, {
     query: COURSE,
-    variables: { id }
+    variables: { id: params.id }
   })
 </script>
 
@@ -25,8 +24,8 @@
   {#if result && result.data && result.data.course}
   <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><a href="/terms" use:link>Terms</a></li>
-        <li><a href="/term/{result.data.course.term.id}" use:link>{result.data.course.term.name}</a></li>
+        <li><a href="#/terms">Terms</a></li>
+        <li><a href="#/term/{result.data.course.term.id}">{result.data.course.term.name}</a></li>
       </ul>
     </nav>
   

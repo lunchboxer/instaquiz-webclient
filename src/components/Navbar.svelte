@@ -1,6 +1,5 @@
 <script>
   import { auth } from '../data/auth'
-  import { link } from 'svelte-routing'
   import NavbarLink from './NavbarLink.svelte'
   import { notifications } from './notifications'
   let showMenu = false
@@ -46,7 +45,7 @@
 
 <nav class="navbar is-black" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="/" use:link>
+    <a class="navbar-item" href="#/">
       <img class="logo" src="/kumu-logo.png" height="28" alt="levitation logo" />
       <span class="title is-4">InstaQuiz</span>
     </a>
@@ -84,7 +83,7 @@
       <div class="navbar-end">
         {#if $auth.name}
         
-          <NavbarLink url="/me" icon="user-circle" text={$auth.name}/>
+          <NavbarLink url="#/me" icon="user-circle" text={$auth.name}/>
          
           <div class="buttons">
             <button class="button is-text" on:click={logout}>
