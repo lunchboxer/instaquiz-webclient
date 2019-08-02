@@ -1,6 +1,5 @@
 <script>
   import { query } from 'svelte-apollo'
-  import { link } from 'svelte-routing'
   import { client } from '../../data/apollo'
   import { TERM } from '../../data/queries'
   import Loading from '../Loading.svelte'
@@ -25,7 +24,7 @@
     {#if result && result.data && result.data.term}
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
-          <li><a href="/terms" use:link>Terms</a></li>
+          <li><a href="#/terms">Terms</a></li>
         </ul>
       </nav>
       <TermDetails term={result.data.term}/>
