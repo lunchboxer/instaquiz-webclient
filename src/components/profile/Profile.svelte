@@ -14,38 +14,40 @@
 {#await $me}
   <Loading what="User" />
 {:then result}
-  <DL>
-    <dt>Role:</dt>
-    <dd>{result.data.me.role}</dd>
+  {#if result.data && result.data.me}
+    <DL>
+      <dt>Role:</dt>
+      <dd>{result.data.me.role}</dd>
 
-    <dt>{result.data.me.role === 'Student' ? 'Student ID:' : 'Username:'}</dt>
-    <dd>{result.data.me.username}</dd>
+      <dt>{result.data.me.role === 'Student' ? 'Student ID:' : 'Username:'}</dt>
+      <dd>{result.data.me.username}</dd>
 
-    <dt>Name:</dt>
-    <dd>{result.data.me.name}</dd>
-    
-    <dt>ID:</dt>
-    <dd>{result.data.me.id}</dd>
+      <dt>Name:</dt>
+      <dd>{result.data.me.name}</dd>
+      
+      <dt>ID:</dt>
+      <dd>{result.data.me.id}</dd>
 
-    {#if result.data.me.coursesAttending.length > 0}
-    <dt>Courses attending:</dt>
-    <dd>{result.data.me.coursesAttending.length} total 
-      {#each result.data.me.coursesAttending as course (course.id)}
-        <li>{course.name}</li>
-      {/each}
-    </dd>
-    {/if}
+      {#if result.data.me.coursesAttending.length > 0}
+      <dt>Courses attending:</dt>
+      <dd>{result.data.me.coursesAttending.length} total 
+        {#each result.data.me.coursesAttending as course (course.id)}
+          <li>{course.name}</li>
+        {/each}
+      </dd>
+      {/if}
 
-    {#if result.data.me.coursesTeaching.length > 0}
-    <dt>Courses teaching:</dt>
-    <dd>{result.data.me.coursesTeaching.length} total 
-      {#each result.data.me.coursesTeaching as course (course.id)}
-        <li>{course.name}</li>
-      {/each}
-    </dd>
-    {/if}
+      {#if result.data.me.coursesTeaching.length > 0}
+      <dt>Courses teaching:</dt>
+      <dd>{result.data.me.coursesTeaching.length} total 
+        {#each result.data.me.coursesTeaching as course (course.id)}
+          <li>{course.name}</li>
+        {/each}
+      </dd>
+      {/if}
 
-  </DL>
+    </DL>
+  {/if}
 {:catch errors}
   <Error {errors} />
 {/await}

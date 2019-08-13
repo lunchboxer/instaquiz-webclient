@@ -24,7 +24,6 @@
     detail.endsAt = new Date(detail.endsAt).toISOString()
     const now = new Date().toJSON()
     const latest = new Date(new Date().getTime() + 24 * 3.6e+6).toJSON()
-    console.log(latest)
     try {
       if (detail.startsAt < now || detail.endsAt < now) {
         throw new Error('New sessions must be in the future.')

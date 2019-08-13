@@ -5,6 +5,7 @@ import replace from 'rollup-plugin-replace'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import postcss from 'rollup-plugin-postcss'
+require('dotenv').config()
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -26,6 +27,13 @@ export default {
         css.write('public/bundle.css')
       }
     }),
+    replace({
+      'process.env.NODE_ENV': JSON.stringify(production ? 'production' : 'development'),
+      'process.env.DEV_API_ENDPOINT': JSON.stringify(process.env.DEV_API_ENDPOINT),
+      'process.env.DEV_SUBSCRIPTION_ENDPOINT': JSON.stringify(process.env.DEV_SUBSCRIPTION_ENDPOINT),
+      'process.env.PROD_API_ENDPOINT': JSON.stringify(process.env.PROD_API_ENDPOINT),
+      'process.env.PROD_SUBSCRIPTION_ENDPOINT': JSON.stringify(process.env.PROD_SUBSCRIPTION_ENDPOINT)
+    }),
 
     // If you have external dependencies installed from
     // npm, you'll most likely need these plugins. In
@@ -41,10 +49,6 @@ export default {
         importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
-
     // Watch the `public` directory and refresh the
     // browser on changes when not in production
     !production && livereload('public'),

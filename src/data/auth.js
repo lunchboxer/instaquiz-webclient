@@ -36,8 +36,8 @@ const createAuthStore = () => {
         mutation: SIGNUP,
         variables: { username, name, password }
       })
-      window.localStorage.setItem('user', JSON.stringify(response.data.login.user))
-      window.localStorage.setItem('token', JSON.stringify(response.data.login.token))
+      window.localStorage.setItem('user', JSON.stringify(response.data.signup.user))
+      window.localStorage.setItem('token', JSON.stringify(response.data.signup.token))
       update(previous => ({
         ...previous,
         ...response.data.signup.user,

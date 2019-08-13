@@ -24,31 +24,35 @@ const cache = new InMemoryCache({
   dataIdFromObject: object => object.id
 })
 
-let errorsLink
-
-if (process.env.NODE_ENV === 'development') {
-  errorsLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      graphQLErrors.map(({ message, locations, path }) =>
-        console.error(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        )
+const errorsLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.error(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
       )
-    }
-    if (networkError) console.error(`[Network error]: ${networkError}`)
-  })
-}
+    )
+  }
+  if (networkError) console.error(`[Network error]: ${networkError}`)
+})
+
+const wsEndpoint = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_SUBSCRIPTION_ENDPOINT
+  : process.env.DEV_SUBSCRIPTION_ENDPOINT
 
 const wsLink = new WebSocketLink({
-  uri: 'ws://localhost:4001',
+  uri: wsEndpoint,
   options: {
     reconnect: true,
     lazy: true
   }
 })
 
+const apiEndpoint = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_API_ENDPOINT
+  : process.env.DEV_API_ENDPOINT
+
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4001'
+  uri: apiEndpoint
 })
 
 const remoteLink = split(

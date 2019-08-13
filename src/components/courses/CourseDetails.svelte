@@ -94,35 +94,33 @@
     <dd>{course.students.length}</dd>
   </dl>
 
-  {#if course.sessions && course.sessions.length > 0}
-    {#if $auth.role === 'Teacher'}
-      <div class="sessions">
-        <h3 class="title is-5">Current and future sessions</h3>
-        {#if future.length > 0}
-          {#each future as session (session.id)}
-            <li>
-              <a href="#/session/{session.id}">
-                {session.order}. {formatDate(session.startsAt)}
-              </a>
-            </li>
-          {/each}
-        {/if}
-        <AddSession courseId={course.id} />
-      </div>
-    {/if}
-    
-    {#if past.length > 0}
-      <div class="sessions">
-        <h3 class="title is-5">Past sessions</h3>
-        {#each past as session (session.id)}
+  {#if $auth.role === 'Teacher'}
+    <div class="sessions">
+      <h3 class="title is-5">Current and future sessions</h3>
+      {#if future.length > 0}
+        {#each future as session (session.id)}
           <li>
             <a href="#/session/{session.id}">
               {session.order}. {formatDate(session.startsAt)}
             </a>
           </li>
         {/each}
-      </div>
-    {/if}
+      {/if}
+      <AddSession courseId={course.id} />
+    </div>
+  {/if}  
+
+  {#if past.length > 0}
+    <div class="sessions">
+      <h3 class="title is-5">Past sessions</h3>
+      {#each past as session (session.id)}
+        <li>
+          <a href="#/session/{session.id}">
+            {session.order}. {formatDate(session.startsAt)}
+          </a>
+        </li>
+      {/each}
+    </div>
   {/if}
 
   <div class="buttons">
