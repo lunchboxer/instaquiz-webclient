@@ -1,5 +1,11 @@
 # InstaQuiz
 
+
+---
+
+**this repo is no longer developed; got merged into [instaquiz](https://github.com/lunchboxer/instaquiz)**
+
+---
 This is a [Svelte](https://svelte.technology) app to provide instant quizes on student devices in the classroom. It's based on [svelte v3 webpack template](https://github.com/sveltejs/template-webpack#v3).
 
 ## Get started
